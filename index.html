@@ -56,6 +56,12 @@
     .kanban-col {
       min-height: calc(100vh - 280px);
     }
+    @media (min-width:768px) {
+      #kanbanBoard { grid-template-columns:repeat(6,minmax(260px,1fr)); gap:14px; overflow-x:auto; padding-bottom:16px; align-items:stretch; }
+      #kanbanBoard .kanban-col { min-width:0; width:100%; box-sizing:border-box; }
+      #kanbanBoard .cards-container { min-width:0; overflow-x:hidden; }
+      #kanbanBoard .deal-card { min-width:0; width:100%; max-width:100%; box-sizing:border-box; overflow-wrap:anywhere; }
+    }
     .kanban-card.dragging {
       opacity: 0.4;
       transform: scale(0.98);
