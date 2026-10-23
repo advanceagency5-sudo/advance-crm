@@ -1,0 +1,14 @@
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+*.zip
+*.sqlite*
+*.db
+backups/
+exports/
+dist/
+test-results/
+playwright-report/
+.DS_Store

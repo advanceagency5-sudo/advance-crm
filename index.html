@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/jpeg" href="./assets/ICON LOGO (3).jpg">
+  <meta name="theme-color" content="#0b172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>نظام إدارة العملاء والصفقات المتكامل | AdVance CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            cairo: ['Cairo', 'sans-serif'],
+          },
+          colors: {
+            advance: {
+              navy: '#0b192c',
+              dark: '#1e293b',
+              blue: '#1d4ed8',
+              cyan: '#0284c7',
+              accent: '#38bdf8',
+              light: '#f8fafc',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    [data-admin-only][hidden] { display:none !important; }
+    body {
+      font-family: 'Cairo', sans-serif;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .kanban-col {
+      min-height: calc(100vh - 280px);
+    }
+    .kanban-card.dragging {
+      opacity: 0.4;
+      transform: scale(0.98);
+    }
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #proposalPrintArea, #proposalPrintArea * {
+        visibility: visible;
+      }
+      #proposalPrintArea {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        background: white;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  
+    /* --- ADVANCE LUXURY SAAS DESIGN SYSTEM 2026 --- */
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #f8fafc;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.04) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(14, 165, 233, 0.04) 0px, transparent 50%);
+      color: #0f172a;
+    }
+    .crm-card {
+      background: #ffffff;
+      border-radius: 1.25rem;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.04), 0 2px 6px -1px rgba(15, 23, 42, 0.02);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .crm-card:hover {
+      border-color: rgba(96, 165, 250, 0.6);
+      box-shadow: 0 12px 28px -4px rgba(37, 99, 235, 0.1), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+      transform: translateY(-2px);
+    }
+    #desktopNavDropdownMenu {
+      animation: dropdownPop 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes dropdownPop {
+      from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .stage-pill {
+      transition: all 0.2s ease;
+    }
+    .stage-pill.active-stage {
+      box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Desktop navigation: explicit sizing avoids compressed, wrapping controls. */
+    @media (min-width: 768px) {
+      #desktopTopBar { display:grid; grid-template-columns:200px 280px minmax(0,1fr); align-items:center; gap:16px; height:80px; }
+      #desktopBrand { min-width:0; white-space:nowrap; }
+      #desktopBrand > img { width:40px; height:40px; flex-shrink:0; }
+      #desktopBrand p { max-width:158px; overflow:hidden; text-overflow:ellipsis; }
+      #desktopBrand > div > div > span:last-child { display:none; }
+      #desktopNavGroup, #desktopNavDropdownContainer { min-width:0; width:100%; }
+      #desktopQuickNav, #desktopActiveUserLabel { display:none !important; }
+      #desktopNavDropdownBtn { display:grid; grid-template-columns:32px minmax(0,1fr) auto 14px; gap:8px; align-items:center; width:100%; min-width:0; height:52px; padding:7px 12px; background:#1e293b; border:1px solid #475569; }
+      #desktopActiveNavIcon { display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:9px; background:#0c4a6e; font-size:18px; line-height:1; flex-shrink:0; }
+      #desktopNavDropdownBtn > div { min-width:0; }
+      #desktopNavDropdownBtn > div > span:first-child { display:block; font-size:9px; line-height:14px; }
+      #desktopActiveNavTitle { display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:12px; line-height:20px; letter-spacing:0; }
+      #desktopActiveNavBadge { white-space:nowrap; font-size:10px; line-height:18px; margin:0; max-width:72px; overflow:hidden; text-overflow:ellipsis; }
+      #desktopNavChevron { width:14px; height:14px; margin:0; flex-shrink:0; }
+      #desktopHeaderActions { display:flex; justify-content:flex-end; align-items:center; min-width:0; gap:8px; }
+      #desktopSearch { flex:1 1 130px; min-width:100px; max-width:190px; width:auto; }
+      #desktopAccount { flex:0 1 auto; min-width:0; white-space:nowrap; }
+      #activeUserSelector { min-width:0; max-width:170px; text-overflow:ellipsis; }
+      #logoutBtn, #openAddDealModalBtn { flex-shrink:0; white-space:nowrap; }
+      #desktopNavDropdownMenu { position:absolute; top:calc(100% + 8px); right:0; margin:0; width:360px; max-width:calc(100vw - 40px); max-height:calc(100dvh - 116px); overflow-y:auto; overflow-x:hidden; background:#0f172a !important; background-image:none; color:#f8fafc; border:1px solid #475569; box-shadow:0 18px 50px #02061755; backdrop-filter:none; isolation:isolate; z-index:60; }
+      #desktopNavDropdownMenu .nav-dropdown-item { min-width:0; gap:10px; padding:10px 12px; }
+      #desktopNavDropdownMenu .nav-dropdown-item > div { flex:1; min-width:0; }
+      #desktopNavDropdownMenu .nav-dropdown-item > div > span:first-child { display:inline-flex; width:24px; flex:0 0 24px; align-items:center; justify-content:center; font-size:17px; }
+      #desktopNavDropdownMenu .nav-dropdown-item > div > div { min-width:0; }
+      #desktopNavDropdownMenu .nav-dropdown-item > span { flex-shrink:0; white-space:nowrap; }
+      #desktopNavDropdownMenu .nav-dropdown-item:hover { background:#1e293b; }
+      #desktopNavDropdownBtn:focus-visible, #desktopNavDropdownMenu button:focus-visible { outline:2px solid #38bdf8; outline-offset:3px; }
+    }
+    @media (min-width:768px) and (max-width:1199px) {
+      #desktopTopBar { grid-template-columns:minmax(160px,1fr) 300px; height:auto; min-height:80px; padding-block:10px; gap:10px 16px; }
+      #desktopHeaderActions { grid-column:1 / -1; width:100%; }
+      #desktopSearch { max-width:none; }
+      #activeUserSelector { max-width:240px; }
+      #desktopNavDropdownMenu { right:auto; left:0; max-height:calc(100dvh - 156px); }
+    }
+
+
+    /* Client identity and actions remain readable at narrow phone widths. */
+    #detailsDialog { min-width:0; overflow-x:hidden; }
+    #detailsIdentityHeader { align-items:flex-start; gap:12px; }
+    #detailsIdentity { min-width:0; flex:1; }
+    #detailCompanyName { line-height:1.7; overflow-wrap:anywhere; }
+    #closeDetailsModalBtn { flex:0 0 32px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; }
+    .detail-contact-rows { display:grid; gap:7px; margin-top:10px; font-size:12px; color:#334155; }
+    .detail-contact-rows > div { display:grid; grid-template-columns:95px minmax(0,1fr); gap:8px; align-items:start; }
+    .detail-contact-rows .contact-label { color:#64748b; font-size:11px; }
+    .detail-contact-rows a { text-align:right; unicode-bidi:isolate; overflow-wrap:anywhere; color:#0369a1; }
+    #detailAmountRow { display:flex; flex-direction:column; align-items:flex-start; gap:6px; min-width:0; padding-bottom:14px; }
+    #detailValue { max-width:100%; line-height:1.6; overflow-wrap:anywhere; }
+    #detailValue[data-restricted="true"] { font-size:13px; font-weight:600; color:#64748b; }
+    #detailActionGrid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding-top:14px; border-top:1px solid #e2e8f0; }
+    #detailActionGrid > * { display:flex; align-items:center; justify-content:center; min-width:0; min-height:44px; padding:10px 8px; border-radius:10px; font-size:12px; font-weight:700; line-height:1.5; text-align:center; text-decoration:none; }
+    #detailActionGrid > [hidden] { display:none !important; }
+    @media (min-width:640px) { #detailActionGrid { grid-template-columns:repeat(4,minmax(0,1fr)); } }
+    @media (max-width:480px) {
+      #detailsModal { padding:10px; }
+      #detailsIdentityHeader, #detailsDialog > .space-y-6 { padding:18px; }
+      .detail-contact-rows > div { grid-template-columns:82px minmax(0,1fr); gap:6px; }
+      #detailCompanyName { font-size:16px; }
+    }
+
+
+    .content-plans-section { border:1px solid #dbe4ef; border-radius:14px; padding:16px; background:#fff; min-width:0; }
+    .content-section-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+    .content-section-heading h4 { font-size:15px; font-weight:800; color:#0f172a; }
+    .content-section-heading p,.content-explanation { font-size:11px; line-height:1.9; color:#64748b; margin:8px 0; }
+    .content-section-heading button,.content-item-controls button { padding:9px 12px; min-height:40px; border-radius:9px; background:#eff6ff; color:#1d4ed8; font-size:12px; font-weight:700; border:1px solid #bfdbfe; }
+    .content-month-select { display:flex; align-items:center; gap:10px; margin:14px 0; font-size:12px; color:#475569; }
+    .content-month-select select { border:1px solid #cbd5e1; border-radius:8px; padding:8px; background:#fff; color:#0f172a; min-height:40px; }
+    .content-summary-grid,.content-week-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .content-summary { background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:12px; min-width:0; }
+    .content-summary h5 { font-size:13px; font-weight:700; }.content-summary strong { display:flex; flex-wrap:wrap; align-items:baseline; gap:5px; margin:10px 0; font-size:22px; color:#0f172a; }.content-summary small{font-size:11px;font-weight:500}.content-summary strong span{color:#047857;font-size:16px;margin-inline-start:auto}.content-summary p{font-size:11px;color:#475569;line-height:1.9}.content-summary p span{display:block;color:#64748b}
+    .content-progress{height:6px;background:#dbeafe;border-radius:8px;overflow:hidden;margin-bottom:10px}.content-progress i{display:block;height:100%;background:#10b981;border-radius:8px}
+    .content-week{padding:10px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;min-width:0}.content-week h6{font-size:12px;font-weight:700}.content-week small{display:block;color:#64748b;font-size:10px;font-weight:400;margin:4px 0}.content-week p{font-size:10px;line-height:1.9;color:#475569}
+    .content-filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}.content-filters label{font-size:11px;color:#475569}.content-filters select{display:block;width:100%;min-width:0;margin-top:5px;padding:9px 5px;border:1px solid #cbd5e1;background:#fff;border-radius:8px;min-height:40px;font-size:11px}
+    .content-items{display:grid;gap:10px}.content-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;border:1px solid #e2e8f0;padding:12px;border-radius:10px;min-width:0}.content-kind{font-size:10px;color:#0369a1}.content-item h6{font-size:12px;font-weight:700;line-height:1.8;overflow-wrap:anywhere}.content-item p{font-size:10px;line-height:1.9;color:#64748b}.content-item-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:7px;max-width:220px}.content-item-controls a{font-size:11px;color:#0369a1;padding:8px}.content-state{font-size:10px;white-space:nowrap;padding:4px 7px;border-radius:6px;background:#f1f5f9;color:#475569}.content-state-review{background:#fffbeb;color:#92400e}.content-state-done{background:#ecfdf5;color:#047857}.content-state-in_progress{background:#eff6ff;color:#1d4ed8}.content-empty{padding:18px 0;font-size:12px;color:#64748b;line-height:1.9}
+    .content-overlay[hidden],[hidden].content-primary{display:none!important}.content-overlay{position:fixed;inset:0;z-index:80;background:#0f172acc;display:flex;align-items:center;justify-content:center;padding:14px}.content-dialog{width:100%;max-width:680px;max-height:92dvh;overflow-y:auto;overflow-x:hidden;border-radius:16px;background:#fff;box-shadow:0 20px 60px #0004;padding:20px;min-width:0}.content-dialog header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}.content-dialog h3{font-size:17px;font-weight:800}.content-dialog header button{min-width:40px;min-height:40px;background:#f1f5f9;border-radius:9px}.content-dialog form>label,.content-form-grid>label,.content-dialog fieldset>label{display:block;font-size:12px;font-weight:600;margin-bottom:12px;min-width:0}.content-dialog input:not([type=hidden]),.content-dialog select{display:block;width:100%;max-width:100%;min-width:0;min-height:44px;padding:9px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;color:#0f172a;margin-top:6px;font-size:13px;box-sizing:border-box}.content-dialog input:disabled,.content-dialog select:disabled{background:#f1f5f9;color:#64748b}.content-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.content-dialog fieldset{min-width:0;border:1px solid #dbe4ef;border-radius:12px;padding:12px}.content-dialog legend{font-weight:700;font-size:13px;padding:0 5px}.content-week-fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.content-week-fields label{font-size:9px;color:#64748b}.content-week-fields input{padding:5px!important;text-align:center}.content-error{color:#b91c1c;font-size:12px;line-height:1.9;min-height:12px}.content-dialog footer{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}.content-dialog footer button{padding:11px 14px;min-height:44px;border-radius:9px;background:#f1f5f9;font-size:12px;font-weight:700}.content-dialog footer .content-primary{background:#2563eb;color:#fff}
+    @media(max-width:480px){.content-form-grid{grid-template-columns:minmax(0,1fr)}.content-dialog{padding:16px}.content-item{grid-template-columns:minmax(0,1fr)}.content-item-controls{max-width:none;justify-content:flex-start}.content-plans-section{padding:12px}.content-summary-grid{grid-template-columns:minmax(0,1fr)}.content-filters{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.content-filters label:last-child{grid-column:1/-1}.content-dialog input,.content-dialog select{font-size:16px!important}}
+
+</style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col">
+  <!-- FULLSCREEN LOGIN & AUTHENTICATION OVERLAY -->
+  <div id="loginOverlay" class="fixed inset-0 bg-slate-900/95 backdrop-blur-md z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-8 border border-slate-200">
+      <!-- Brand & Header -->
+      <div class="text-center mb-6">
+        <img src="./assets/THIRD LOGO (3).jpg" alt="AdVance CRM Official Logo" class="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-2xl mx-auto mb-3 shadow-xl border border-sky-500/30">
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900">تسجيل الدخول إلى AdVance CRM</h2>
+        <p class="text-xs text-slate-500 mt-1">شريكك للنمو وتطوير الأعمال والتحول الرقمي</p>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label for="loginUsername" class="block text-xs font-bold text-slate-700 mb-1">اسم المستخدم (Username)</label>
+          <div class="relative">
+            <input type="text" id="loginUsername" required placeholder="أدخل اسم المستخدم"
+              class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-3 pl-10 focus:outline-none focus:border-blue-500 font-mono">
+            <span class="absolute left-3 top-3 text-slate-400">👤</span>
+          </div>
+        </div>
+
+        <div>
+          <label for="loginPassword" class="block text-xs font-bold text-slate-700 mb-1">كلمة المرور (Password)</label>
+          <div class="relative">
+            <input type="password" id="loginPassword" required placeholder="أدخل كلمة المرور الخاصة بك"
+              class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-3 pl-10 focus:outline-none focus:border-blue-500 font-mono">
+            <button type="button" id="toggleLoginPasswordBtn" class="absolute left-3 top-3 text-slate-400 hover:text-slate-600 text-xs" title="إظهار/إخفاء">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white font-bold text-xs py-3 rounded-xl shadow-lg transition transform active:scale-95">
+          دخول إلى النظام
+        </button>
+      </form>
+
+      <!-- Security Footnote -->
+      <div class="mt-6 pt-4 border-t border-slate-100 text-center">
+        <div class="inline-flex items-center gap-1.5 text-[11px] text-slate-500 font-medium">
+          <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+          <span>نسخة محلية تجريبية • لا تستخدم بيانات عملاء حساسة</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 text-white shadow-xl sticky top-0 z-30 border-b border-sky-500/20 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- DESKTOP TOP BAR (md and above) -->
+      <div id="desktopTopBar" class="hidden md:flex items-center justify-between h-16 gap-3">
+        <!-- Brand & Logo -->
+        <div id="desktopBrand" class="flex items-center gap-3">
+          <img src="./assets/ICON LOGO (3).jpg" alt="AdVance Logo" class="w-10 h-10 object-cover rounded-xl shadow-md border border-sky-400/40">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl font-black tracking-wider text-white">AdVance</span>
+              <span class="text-[10px] bg-gradient-to-r from-blue-600 to-sky-500 text-white font-bold px-2 py-0.5 rounded-full shadow-sm">Growth CRM</span>
+            </div>
+            <p class="text-[10px] text-slate-400 font-medium">شريكك للنمو وتطوير الأعمال والتحول الرقمي</p>
+          </div>
+        </div>
+
+        <!-- HERO DROPDOWN NAVIGATION MENU (DESKTOP) -->
+        <div id="desktopNavGroup" class="flex items-center gap-2.5">
+          <div class="relative" id="desktopNavDropdownContainer">
+            <button type="button" id="desktopNavDropdownBtn" aria-expanded="false" aria-controls="desktopNavDropdownMenu" class="flex items-center gap-2.5 bg-slate-800/90 hover:bg-slate-700/90 border border-sky-400/40 text-white px-4 py-2 rounded-xl shadow-lg transition-all active:scale-95 cursor-pointer">
+              <span id="desktopActiveNavIcon" class="text-lg">💼</span>
+              <div class="text-right">
+                <span class="text-[9px] text-sky-300 block leading-none font-semibold">القسم الحالي</span>
+                <span id="desktopActiveNavTitle" class="text-sm font-extrabold tracking-wide text-white">مسار الصفقات (Pipeline)</span>
+              </div>
+              <span id="desktopActiveNavBadge" class="bg-blue-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full mr-1">7 صفقات</span>
+              <svg id="desktopNavChevron" class="w-4 h-4 text-sky-400 mr-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+
+            <!-- DROPDOWN MENU PANEL (DESKTOP) -->
+            <div id="desktopNavDropdownMenu" class="hidden absolute right-0 mt-2 w-80 bg-slate-900/95 backdrop-blur-2xl border border-sky-500/40 rounded-2xl shadow-2xl py-2 z-50 transition-all duration-200 divide-y divide-slate-800">
+              <!-- Group 1: المبيعات والعملاء -->
+              <div class="p-2 space-y-1">
+                <div class="text-[10px] font-bold text-sky-400 px-3 py-1 uppercase tracking-wider">💼 المبيعات والعملاء</div>
+                <button type="button" data-tab="kanban" class="nav-dropdown-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/30 transition text-right">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">💼</span>
+                    <div>
+                      <div class="font-bold text-white">مسار الصفقات (Pipeline)</div>
+                      <div class="text-[10px] text-slate-400">متابعة التدفق، المراحل، والإيرادات</div>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-blue-500/20 text-sky-300 border border-sky-500/30 px-1.5 py-0.5 rounded font-bold" id="dropdownDealsCountBadge">7</span>
+                </button>
+
+                <button type="button" data-tab="contacts" class="nav-dropdown-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/30 transition text-right">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">🏢</span>
+                    <div>
+                      <div class="font-bold text-white">دليل الشركات والعملاء</div>
+                      <div class="text-[10px] text-slate-400">قاعدة البيانات، الهواتف، والتصدير</div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+
+              <!-- Group 2: المشروعات والتشغيل -->
+              <div class="p-2 space-y-1">
+                <div class="text-[10px] font-bold text-emerald-400 px-3 py-1 uppercase tracking-wider">🚀 المشروعات والإنجاز</div>
+                <button type="button" data-tab="projects" class="nav-dropdown-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/30 transition text-right">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">🚀</span>
+                    <div>
+                      <div class="font-bold text-white">إدارة المشروعات والمهام (Delivery)</div>
+                      <div class="text-[10px] text-slate-400">نسب الإنجاز، مخرجات التعاقد، والجداول</div>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-1.5 py-0.5 rounded font-bold">نشط</span>
+                </button>
+
+                <button type="button" data-tab="teamTasks" class="nav-dropdown-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/30 transition text-right">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">🎯</span>
+                    <div>
+                      <div class="font-bold text-white">لوحة مهام الفريق (My Tasks)</div>
+                      <div class="text-[10px] text-slate-400">مهام مؤمن ويوسف حسب أدوات AI ومواعيد التسليم</div>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded font-bold">مؤمن/يوسف</span>
+                </button>
+              </div>
+
+              <!-- Group 3: التحليلات وإدارة النظام -->
+              <div class="p-2 space-y-1">
+                <div class="text-[10px] font-bold text-purple-400 px-3 py-1 uppercase tracking-wider">📊 التحليلات وإدارة النظام</div>
+                <button type="button" data-tab="dashboard" class="nav-dropdown-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/30 transition text-right">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">📈</span>
+                    <div>
+                      <div class="font-bold text-white">لوحة المؤشرات والتحليلات (Dashboard)</div>
+                      <div class="text-[10px] text-slate-400">إحصائيات الإيرادات، معدلات التحويل، والمخططات</div>
+                    </div>
+                  </div>
+                </button>
+
+                <button type="button" data-tab="automations" class="nav-dropdown-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/30 transition text-right">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">⚡</span>
+                    <div>
+                      <div class="font-bold text-white">الأتمتة وWhatsApp CRM</div>
+                      <div class="text-[10px] text-slate-400">سيناريوهات المتابعة والرد الآلي السحابي</div>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.2 rounded font-bold">مُفعل</span>
+                </button>
+
+                <button type="button" data-tab="integrations" class="nav-dropdown-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/30 transition text-right">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">🔌</span>
+                    <div>
+                      <div class="font-bold text-white">مركز الربط والتكامل (Integrations)</div>
+                      <div class="text-[10px] text-slate-400">أكواد Webhook وAPI للربط المباشر</div>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-sky-500/20 text-sky-300 border border-sky-400/30 px-1.5 py-0.2 rounded font-bold">جديد</span>
+                </button>
+
+                <button type="button" data-tab="roles" id="navRolesTabBtn" class="nav-dropdown-item w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white hover:bg-blue-600/30 transition text-right">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-base">🛡️</span>
+                    <div>
+                      <div class="font-bold text-white">إدارة الصلاحيات (Admin Roles)</div>
+                      <div class="text-[10px] text-slate-400">لوحة تحكم مؤمن النوساني وتعيين الصلاحيات</div>
+                    </div>
+                  </div>
+                  <span class="text-[10px] bg-purple-500/20 text-purple-300 border border-purple-400/30 px-1.5 py-0.5 rounded font-bold">آدمن</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUICK DIRECT SELECT DROPDOWN -->
+          <div id="desktopQuickNav" class="hidden lg:flex items-center gap-1.5 bg-slate-800/80 border border-slate-700/80 rounded-xl px-2.5 py-1.5 text-xs">
+            <span class="text-slate-400 font-medium text-[11px]">انتقال:</span>
+            <select id="mainNavSelectDropdown" class="bg-transparent text-sky-300 font-bold text-xs focus:outline-none cursor-pointer">
+              <option value="kanban">💼 مسار الصفقات (Pipeline)</option>
+              <option value="projects">🚀 إدارة المشروعات (Delivery)</option>
+              <option value="teamTasks">🎯 لوحة مهام الفريق (My Tasks)</option>
+              <option value="dashboard">📈 لوحة المؤشرات والتحليلات</option>
+              <option value="contacts">🏢 دليل الشركات والعملاء</option>
+              <option value="automations">⚡ الأتمتة وWhatsApp CRM</option>
+              <option value="integrations">🔌 مركز التكامل والربط</option>
+              <option value="roles">🛡️ إدارة الصلاحيات (Admin Roles)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 3. Global Search & User Switcher & Add Deal -->
+        <div id="desktopHeaderActions" class="flex items-center gap-2">
+          <div id="desktopSearch" class="relative w-44 xl:w-52">
+            <input type="text" id="globalSearch" placeholder="بحث عن صفقة، عميل..." 
+              class="w-full bg-slate-800/90 border border-slate-700 text-xs text-slate-200 placeholder-slate-400 rounded-xl pl-3 pr-8 py-2 focus:outline-none focus:border-sky-400 focus:ring-1 focus:ring-sky-400 transition">
+            <svg class="w-3.5 h-3.5 text-slate-400 absolute right-2.5 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+
+          <!-- Active User & Switcher -->
+          <div id="desktopAccount" class="flex items-center gap-1.5 bg-slate-800/90 border border-slate-700/80 rounded-xl py-1 px-2 text-xs">
+            <span id="activeUserBadgeIcon" class="text-base">👑</span>
+            <div id="desktopActiveUserLabel" class="text-right hidden xl:block">
+              <span id="activeUserDisplayName" class="font-bold text-sky-300 text-[11px] block">مؤمن النوساني</span>
+            </div>
+            <select id="activeUserSelector" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-1.5 py-1 font-bold focus:outline-none focus:border-sky-400 cursor-pointer" title="تبديل الحساب لمعاينة الصلاحيات فوراً">
+              <option value="moamen">👑 مؤمن (Admin)</option>
+              <option value="youssef">🚀 يوسف (عضو)</option>
+            </select>
+            <button type="button" id="logoutBtn" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs px-2 py-1 rounded-lg font-bold flex items-center gap-1 transition" title="تسجيل الخروج">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+              <span class="hidden sm:inline">خروج</span>
+            </button>
+          </div>
+
+          <!-- Add Deal Button -->
+          <button id="openAddDealModalBtn" class="bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transition transform active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span class="whitespace-nowrap">صفقة جديدة</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- MOBILE TOP BAR (Below md screens) -->
+      <div class="flex md:hidden items-center justify-between h-14">
+        <div class="flex items-center gap-2">
+          <img src="./assets/ICON LOGO (3).jpg" alt="AdVance Logo" class="w-8 h-8 object-cover rounded-xl shadow border border-sky-400/30">
+          <div class="flex items-center gap-1.5">
+            <span class="text-base font-black tracking-wide text-white">AdVance</span>
+            <span class="text-[9px] bg-sky-500/20 text-sky-300 border border-sky-400/30 px-1.5 py-0.5 rounded-full font-bold">CRM</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button type="button" id="mobileUserMenuBtn" class="flex items-center gap-1.5 bg-slate-800/90 border border-slate-700 text-xs px-2.5 py-1 rounded-xl active:scale-95 transition" title="تبديل الحساب أو الملف الشخصي">
+            <span id="mobileUserAvatarSpan" class="text-sm">👑</span>
+            <span id="mobileUserNameSpan" class="font-bold text-[11px] text-sky-300">مؤمن</span>
+          </button>
+
+          <button type="button" id="mobileHeaderLogoutBtn" class="w-8 h-8 rounded-xl bg-slate-800/80 hover:bg-rose-500/20 text-slate-300 hover:text-rose-300 border border-slate-700 flex items-center justify-center transition active:scale-90" title="تسجيل الخروج">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STICKY MOBILE DROPDOWN NAVIGATION BAR (VISIBLE ON MOBILE ONLY) -->
+    <div class="md:hidden bg-slate-900 border-t border-sky-500/20 px-3 py-2 shadow-lg">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-1 text-xs text-sky-300 font-bold whitespace-nowrap">
+          <span>📂</span>
+          <span>القائمة:</span>
+        </div>
+        <div class="relative flex-1">
+          <select id="mobileNavSelectDropdown" class="w-full bg-slate-800 text-white font-bold text-xs py-2 pr-7 pl-3 rounded-xl border border-sky-400/40 focus:outline-none focus:ring-2 focus:ring-sky-400 appearance-none text-right cursor-pointer shadow-md">
+            <option value="kanban">💼 مسار الصفقات (Pipeline)</option>
+            <option value="projects">🚀 إدارة المشروعات (Delivery)</option>
+            <option value="teamTasks">🎯 لوحة مهام الفريق (My Tasks)</option>
+            <option value="dashboard">📈 لوحة المؤشرات والتحليلات</option>
+            <option value="contacts">🏢 دليل الشركات والعملاء</option>
+            <option value="automations">⚡ الأتمتة وWhatsApp CRM</option>
+            <option value="integrations">🔌 مركز التكامل والربط</option>
+            <option value="roles">🛡️ إدارة الصلاحيات (Admin Roles)</option>
+          </select>
+          <div class="pointer-events-none absolute right-2 top-2.5 text-sky-400">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+        </div>
+
+        <button type="button" id="mobileQuickAddDealBtn" class="bg-gradient-to-r from-blue-600 to-sky-500 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-md active:scale-95 flex items-center gap-1 transition">
+          <span class="text-sm font-black">+</span>
+          <span>صفقة</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 lg:p-8 pb-32 sm:pb-8">
+<section class="mb-4 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm"><strong>نسخة إصلاح محلية — المرحلة الأولى</strong><p>التخزين منفصل عن النسخة القديمة. تسجيل الدخول الحالي تجريبي؛ قاعدة البيانات والصلاحيات الآمنة في المرحلة التالية.</p><p id="storageHealthBanner" role="status" aria-live="polite">جاهز للعمل المحلي.</p><div class="flex flex-wrap gap-3 mt-3"><button id="backupDealsBtn" class="underline" type="button">تنزيل نسخة كاملة للصفقات والمهام والأنشطة</button><button id="restoreDealsBtn" class="underline" type="button">استيراد نسخة / استرجاع ملف</button><button id="restoreRecoveryBtn" class="underline" type="button">استرجاع آخر نسخة قبل الحذف</button><button id="exportRawBtn" class="underline" type="button">تنزيل بيانات التخزين الخام للمراجعة</button><input id="restoreDealsInput" type="file" accept=".json,application/json" hidden></div></section>
+
+    <!-- TAB 1: KANBAN PIPELINE VIEW -->
+    <section id="kanbanView" class="tab-content">
+      <!-- Desktop Filter & Sort Bar (Hidden on Mobile) -->
+      <div class="hidden md:flex bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6 flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="flex items-center gap-2">
+            <label for="filterContract" class="text-xs font-bold text-slate-600">نوع التعاقد:</label>
+            <select id="filterContract" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-500">
+              <option value="all">الكل (الشهري والمشاريع)</option>
+              <option value="retainer">شراكة شهرية مستمرة (Retainer)</option>
+              <option value="project">تعاون قائم على المشروع (Project)</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label for="filterService" class="text-xs font-bold text-slate-600">الخدمة:</label>
+            <select id="filterService" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-500 max-w-[180px] truncate">
+              <option value="all">جميع الخدمات (10 خدمات)</option>
+              <option value="growth_strategy">01 استراتيجية النمو والتسويق</option>
+              <option value="content_management">02 المحتوى وإدارة المنصات</option>
+              <option value="branding">03 الهوية البصرية والتصميم</option>
+              <option value="video_production">04 التصوير وإنتاج الفيديو</option>
+              <option value="digital_ads">05 الإعلانات الرقمية</option>
+              <option value="seo">06 تحسين محركات البحث SEO</option>
+              <option value="influencer">07 التسويق عبر المؤثرين</option>
+              <option value="web_dev">08 المواقع والمتاجر الإلكترونية</option>
+              <option value="automation_crm">09 الأتمتة وCRM</option>
+              <option value="company_profile">10 الملفات المؤسسية وعروض الأعمال</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label for="filterMarket" class="text-xs font-bold text-slate-600">السوق:</label>
+            <select id="filterMarket" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-500">
+              <option value="all">كل الأسواق</option>
+              <option value="egypt">مصر (القاهرة والجيزة)</option>
+              <option value="gulf">الخليج العربي (السعودية والإمارات)</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label for="sortDeals" class="text-xs font-bold text-slate-600">ترتيب:</label>
+            <select id="sortDeals" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-500">
+              <option value="date_desc">الأحدث إضافة</option>
+              <option value="value_desc">الأعلى قيمة</option>
+              <option value="value_asc">الأقل قيمة</option>
+              <option value="name_asc">أبجدياً (اسم الشركة)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="text-xs text-slate-500 font-medium" id="kanbanTotalSummary">إجمالي المسار: 0 ج.م</span>
+          <button id="resetSampleDataBtn" class="text-xs text-slate-500 hover:text-slate-800 underline transition" title="إعادة تعيين البيانات الافتراضية">بدء عينة تجريبية جديدة (يستبدل البيانات)</button>
+        </div>
+      </div>
+
+      <!-- MOBILE EXECUTIVE COMMAND HUB (MOBILE ONLY) -->
+      <div class="block md:hidden mb-4 space-y-3">
+        <!-- 1. Mobile Executive KPI Strip -->
+        <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white p-4 rounded-2xl shadow-lg border border-slate-800">
+          <div class="flex items-center justify-between mb-2.5">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span class="text-xs font-black tracking-wide text-white">مسار نمو AdVance 2026</span>
+            </div>
+            <span id="mobileDealsCountBadge" class="text-[11px] font-bold bg-blue-600/30 text-sky-300 border border-blue-400/30 px-2.5 py-0.5 rounded-full">7 صفقات نشطة</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="bg-slate-800/70 p-2.5 rounded-xl border border-slate-700/60">
+              <span class="text-[10px] text-slate-400 block mb-0.5 font-medium">إجمالي قيمة المسار:</span>
+              <span id="mobileTotalPipelineValue" class="text-sm font-black text-white">0 ج.م</span>
+            </div>
+            <div class="bg-slate-800/70 p-2.5 rounded-xl border border-slate-700/60">
+              <span class="text-[10px] text-slate-400 block mb-0.5 font-medium">عقود شهرية متعاقد عليها:</span>
+              <span id="mobileMrrValue" class="text-sm font-black text-emerald-400">0 ج.م / شهر</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Mobile Search & Filter Action Bar -->
+        <div class="flex items-center gap-2">
+          <div class="relative flex-1">
+            <input type="text" id="mobileSearchInput" placeholder="بحث باسم الشركة، العميل، أو الهاتف..." 
+              class="w-full text-xs bg-white border border-slate-200 rounded-xl pl-3 pr-8 py-2.5 focus:outline-none focus:border-blue-500 shadow-sm transition">
+            <svg class="w-4 h-4 text-slate-400 absolute right-2.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+
+          <button type="button" id="openMobileFilterModalBtn" class="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95 whitespace-nowrap">
+            <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+            </svg>
+            <span>فلترة</span>
+            <span id="mobileFilterBadgeDot" class="w-2 h-2 rounded-full bg-blue-600 hidden"></span>
+          </button>
+        </div>
+
+        <!-- 3. Mobile Stage Filter Pills Bar (Thumb-Friendly with Live Counts & Color Dots) -->
+        <div class="overflow-x-auto pb-1 flex gap-1.5 no-scrollbar" id="kanbanMobileStageFilter">
+          <button type="button" class="stage-pill active-stage px-3.5 py-1.5 rounded-full text-xs font-bold bg-blue-600 text-white whitespace-nowrap shadow-sm" data-stage="all">الكل (12)</button>
+          <button type="button" class="stage-pill px-3 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border border-slate-200 whitespace-nowrap" data-stage="new_lead">عميل محتمل</button>
+          <button type="button" class="stage-pill px-3 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border border-slate-200 whitespace-nowrap" data-stage="discovery">تحديد الاحتياج</button>
+          <button type="button" class="stage-pill px-3 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border border-slate-200 whitespace-nowrap" data-stage="proposal">إرسال العرض</button>
+          <button type="button" class="stage-pill px-3 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border border-slate-200 whitespace-nowrap" data-stage="negotiation">تفاوض</button>
+          <button type="button" class="stage-pill px-3 py-1.5 rounded-full text-xs font-bold bg-white text-slate-700 border border-slate-200 whitespace-nowrap" data-stage="won">فوز بالتعاقد</button>
+        </div>
+      </div>
+
+      <!-- Mobile Dedicated Deals Feed Container (NO bulky columns) -->
+      <div id="mobileDealsFeed" class="block md:hidden space-y-3.5">
+        <!-- Injected via JS for mobile -->
+      </div>
+
+      <!-- Desktop Kanban Columns Container (md and above) -->
+      <div class="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 overflow-x-auto pb-4" id="kanbanBoard">
+        <!-- Columns will be injected by JavaScript -->
+      </div>
+    </section>
+    <!-- TAB: PROJECTS & DELIVERY MANAGEMENT -->
+    <section id="projectsView" class="tab-content hidden">
+      <!-- Projects Header & KPIs -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-500 block mb-1">المشروعات النشطة قيد التنفيذ</span>
+          <div class="text-2xl font-black text-slate-900" id="statActiveProjects">0 مشروع</div>
+          <span class="text-[11px] text-blue-600 font-semibold">شراكات شهرية ومشاريع محددة</span>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-500 block mb-1">نسبة إنجاز المخرجات الكلية</span>
+          <div class="text-2xl font-black text-emerald-600" id="statOverallProgress">0%</div>
+          <div class="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mt-2">
+            <div id="statProgressBar" class="bg-emerald-500 h-full transition-all duration-500" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-500 block mb-1">حالة المهام التنفيذية</span>
+          <div class="text-2xl font-black text-blue-700" id="statTasksCount">0 / 0</div>
+          <span class="text-[11px] text-slate-500">مهمة مكتملة ومسلّمة</span>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-500 block mb-1">مهام بانتظار اعتماد العميل</span>
+          <div class="text-2xl font-black text-amber-600" id="statReviewTasks">0 مهام</div>
+          <span class="text-[11px] text-slate-500">جاهزة للمراجعة والتسليم</span>
+        </div>
+      </div>
+
+      <!-- Projects Cards Carousel / Grid -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+            <span>المشروعات ومعدلات الإنجاز (Projects Overview)</span>
+          </h3>
+          <span class="text-xs bg-blue-50 text-blue-700 font-bold px-3 py-1 rounded-full border border-blue-200 flex items-center gap-1.5 shadow-sm"><span>👇 اضغط على أي مشروع للانتقال الفوري وتعديل المهام بالجدول</span></span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5" id="projectsCardsContainer">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Tasks Delivery Control Toolbar -->
+      <div id="tasksDeliveryToolbar" class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-4 flex flex-wrap items-center justify-between gap-3 transition duration-300">
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="flex items-center gap-2">
+            <label for="filterTaskProject" class="text-xs font-bold text-slate-600">المشروع:</label>
+            <select id="filterTaskProject" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-500">
+              <option value="all">جميع المشروعات</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label for="filterTaskAssignee" class="text-xs font-bold text-slate-600">المسؤول:</label>
+            <select id="filterTaskAssignee" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-500">
+              <option value="all">كل المكلفين (الفريق والعميل)</option>
+              <option value="مؤمن النوساني">مؤمن النوساني (الرئيس التنفيذي)</option>
+              <option value="يوسف الخولي">يوسف الخولي (فريق العمل والنمو)</option>
+              <option value="العميل">العميل (مراجعة / مدخلات العميل)</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <label for="filterTaskStatus" class="text-xs font-bold text-slate-600">حالة المهمة:</label>
+            <select id="filterTaskStatus" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-500">
+              <option value="all">كل الحالات</option>
+              <option value="todo">⏳ قيد الانتظار (To Do)</option>
+              <option value="in_progress">🚀 قيد التنفيذ (In Progress)</option>
+              <option value="review">🔍 مراجعة واعتماد العميل</option>
+              <option value="done">✅ مكتملة ومسلّمة (Done)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="autoGenerateTasksBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-lg border border-slate-300 transition flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+            <span>توليد مهام الخدمة الذكية</span>
+          </button>
+          <button id="openAddTaskModalBtn" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>إضافة مهمة جديدة</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Master Tasks Table -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="p-3.5 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs font-bold text-slate-700">
+          <span id="tasksTableCountSummary">عرض المهام التنفيذية</span>
+          <span class="text-slate-400 font-normal">يمكنك تعديل حالة المهمة والمسؤول مباشرة من الجدول</span>
+        </div>
+        <!-- Mobile Task Cards Feed -->
+        <div id="masterTasksMobileList" class="block md:hidden space-y-3 p-3 bg-slate-50/50">
+          <!-- Injected by JS for Mobile -->
+        </div>
+
+        <!-- Desktop Master Tasks Table -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-slate-100/70 text-slate-600 uppercase border-b border-slate-200 font-bold">
+              <tr>
+                <th class="py-3 px-4">المهمة التنفيذية</th>
+                <th class="py-3 px-4">الشركة / المشروع</th>
+                <th class="py-3 px-4">المسؤول</th>
+                <th class="py-3 px-4">الأداة / الذكاء الاصطناعي</th>
+                <th class="py-3 px-4">موعد التسليم</th>
+                <th class="py-3 px-4">الأولوية</th>
+                <th class="py-3 px-4">حالة التنفيذ</th>
+                <th class="py-3 px-4">رابط المخرج</th>
+                <th class="py-3 px-4 text-center">إجراء</th>
+              </tr>
+            </thead>
+            <tbody id="masterTasksTableBody" class="divide-y divide-slate-100">
+              <!-- Injected by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- TAB: TEAM & MEMBER TASKS WORKSPACE (NEW) -->
+    <section id="teamTasksView" class="tab-content hidden">
+      <!-- Member Selector Carousel / Grid -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between mb-3 flex-wrap gap-2">
+          <div>
+            <h2 class="text-base font-extrabold text-slate-800 flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+              <span>لوحة مهام وتكليفات الفريق (Workspaces by Assignee)</span>
+            </h2>
+            <p class="text-xs text-slate-500 mt-0.5">اختر الشخص لعرض كل المهام المطلوبة منه ومتابعة ما تم إنجازه بالتواريخ وأدوات التنفيذ</p>
+          </div>
+          <button id="quickAddMemberTaskBtn" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 shadow">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>إضافة مهمة جديدة</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3.5" id="memberCardsGrid">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Member Selected KPI Summary -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-500 block mb-1">إجمالي المهام المكلف بها</span>
+          <div class="text-2xl font-black text-slate-800" id="teamMemberTotalTasks">0</div>
+          <span class="text-[11px] text-slate-400" id="teamMemberNameSubtitle">كل المهام</span>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-500 block mb-1">مكتملة ومسلّمة</span>
+          <div class="text-2xl font-black text-emerald-600" id="teamMemberDoneTasks">0</div>
+          <span class="text-[11px] text-emerald-700 font-semibold" id="teamMemberDonePercent">0% نسبة الإنجاز</span>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-500 block mb-1">قيد التنفيذ حالياً</span>
+          <div class="text-2xl font-black text-blue-600" id="teamMemberInProgressTasks">0</div>
+          <span class="text-[11px] text-blue-700 font-semibold">جارٍ العمل عليها</span>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-500 block mb-1">قيد الانتظار أو مراجعة</span>
+          <div class="text-2xl font-black text-amber-600" id="teamMemberPendingTasks">0</div>
+          <span class="text-[11px] text-amber-700 font-semibold">تتطلب المتابعة</span>
+        </div>
+      </div>
+
+      <!-- Member Tasks Control Toolbar & Table -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="p-3.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-xs text-slate-800" id="teamMemberTableTitle">جدول مهام مؤمن النوساني</span>
+            <span id="teamMemberTableCountBadge" class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full font-bold">0 مهام</span>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2.5">
+            <div class="flex items-center gap-1.5">
+              <label for="filterMemberTaskStatus" class="text-xs font-bold text-slate-600">الحالة:</label>
+              <select id="filterMemberTaskStatus" class="text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1 focus:outline-none focus:border-blue-500">
+                <option value="all">كل الحالات</option>
+                <option value="todo">⏳ قيد الانتظار</option>
+                <option value="in_progress">🚀 قيد التنفيذ</option>
+                <option value="review">🔍 مراجعة واعتماد</option>
+                <option value="done">✅ مكتملة ومسلّمة</option>
+              </select>
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <label for="filterMemberTaskTool" class="text-xs font-bold text-slate-600">الأداة:</label>
+              <select id="filterMemberTaskTool" class="text-xs bg-white border border-slate-300 rounded-lg px-2.5 py-1 focus:outline-none focus:border-blue-500">
+                <option value="all">كل الأدوات</option>
+                <option value="كلود">كلود (Claude)</option>
+                <option value="شات جي بي تي">شات جي بي تي (ChatGPT)</option>
+                <option value="جيمناي">جيمناي (Gemini)</option>
+                <option value="انتي جرافتي">انتي جرافتي (Antigravity)</option>
+                <option value="ميتا">ميتا (Meta Ads)</option>
+                <option value="كانفا">كانفا / أدوبي</option>
+                <option value="تواصل مع العميل">تواصل مع العميل</option>
+                <option value="أخرى">أدوات مخصصة</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Member Tasks Feed -->
+        <div id="memberTasksMobileList" class="block md:hidden space-y-3 p-3 bg-slate-50/50">
+          <!-- Injected by JS for Mobile -->
+        </div>
+
+        <!-- Desktop Member Tasks Table -->
+        <div class="hidden md:block overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-slate-100/70 text-slate-600 uppercase border-b border-slate-200 font-bold">
+              <tr>
+                <th class="py-3 px-3 w-10 text-center">#</th>
+                <th class="py-3 px-4">المهمة التنفيذية</th>
+                <th class="py-3 px-4">الشركة / العميل</th>
+                <th class="py-3 px-4">أداة / طريقة التنفيذ</th>
+                <th class="py-3 px-4">موعد التسليم</th>
+                <th class="py-3 px-4">الأولوية</th>
+                <th class="py-3 px-4">التحكم في الحالة</th>
+                <th class="py-3 px-4">المخرج</th>
+                <th class="py-3 px-4 text-center">إجراء</th>
+              </tr>
+            </thead>
+            <tbody id="memberTasksTableBody" class="divide-y divide-slate-100">
+              <!-- Injected by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- TAB 2: DASHBOARD & ANALYTICS VIEW -->
+    <section id="dashboardView" class="tab-content hidden">
+      <!-- KPI Stats -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-500">إجمالي قيمة مسار الصفقات</span>
+            <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+          </div>
+          <div class="text-2xl font-black text-slate-800" id="kpiTotalPipeline">0 ج.م</div>
+          <p class="text-xs text-slate-500 mt-1">تشمل الصفقات النشطة قيد التفاوض</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-500">القيمة الشهرية للعقود المتعاقد عليها</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            </div>
+          </div>
+          <div class="text-2xl font-black text-emerald-600" id="kpiRetainersMRR">0 ج.م / شهر</div>
+          <p class="text-xs text-slate-500 mt-1">قيمة تعاقدية متكررة، وليست إيرادًا محصلًا</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-500">الصفقات المغلقة بنجاح (Won)</span>
+            <div class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+          </div>
+          <div class="text-2xl font-black text-sky-700" id="kpiWonValue">0 ج.م</div>
+          <p class="text-xs text-slate-500 mt-1" id="kpiWonCount">0 صفقات رابحة</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-500">معدل الإغلاق والتحويل</span>
+            <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+            </div>
+          </div>
+          <div class="text-2xl font-black text-indigo-600" id="kpiConversionRate">0%</div>
+          <p class="text-xs text-slate-500 mt-1" id="kpiActiveCount">0 صفقة نشطة قيد المتابعة</p>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+            توزيع قيمة الصفقات حسب مراحل البيع
+          </h3>
+          <div class="relative h-72">
+            <canvas id="stageChart"></canvas>
+          </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+            عدد الصفقات حسب نوع التعاقد
+          </h3>
+          <div class="relative h-72">
+            <canvas id="contractChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services Demand Chart -->
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm mb-6">
+        <h3 class="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+          الطلب على منظومة خدمات AdVance الـ 10
+        </h3>
+        <div class="relative h-72">
+          <canvas id="servicesChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Quick Action / Follow-up list -->
+      <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <h3 class="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+          <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+          متابعات اليوم ذات الأولوية العالية
+        </h3>
+        <div id="urgentFollowUpsList" class="divide-y divide-slate-100 text-sm">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: CONTACTS & COMPANIES TABLE VIEW -->
+    <section id="contactsView" class="tab-content hidden">
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+        
+        <!-- Table Toolbar -->
+        <div class="p-4 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 bg-slate-50">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-sm text-slate-700">قائمة العملاء والصفقات المسجلة</span>
+            <span id="tableCountBadge" class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full font-bold">0</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <button id="exportCsvBtn" class="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>تصدير إلى CSV</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Responsive Table Container -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-sm">
+            <thead class="bg-slate-100/80 text-xs text-slate-600 font-bold uppercase border-b border-slate-200">
+              <tr>
+                <th class="py-3 px-4">الشركة / العميل</th>
+                <th class="py-3 px-4">مسؤول التواصل</th>
+                <th class="py-3 px-4">الخدمة المطلوبة</th>
+                <th class="py-3 px-4">نوع التعاقد</th>
+                <th class="py-3 px-4">المرحلة</th>
+                <th class="py-3 px-4">قيمة الصفقة</th>
+                <th class="py-3 px-4">المهام</th>
+                <th class="py-3 px-4 text-center">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="contactsTableBody" class="divide-y divide-slate-100">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: AUTOMATIONS & WORKFLOWS -->
+    <section id="automationsView" class="tab-content hidden">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-slate-800">الأتمتة وتكاملات WhatsApp CRM</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          بناء سيناريوهات الرد والمتابعة التلقائية لتقليل الهدر وسرعة الاستجابة، مطابقةً لخدمة "الأتمتة وCRM" التي تقدمها AdVance.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Workflow 1 -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-sm">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+                </span>
+                <h3 class="font-bold text-slate-800 text-sm">رسالة ترحيبية فورية عبر WhatsApp</h3>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" checked class="sr-only peer auto-toggle" data-id="wf1">
+                <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+              </label>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              عند إضافة عميل محتمل جديد من الموقع أو الإعلانات، يتم إرسال رسالة ترحيب مخصصة مع رابط بروفايل AdVance 2026 ورابط حجز مكالمة اكتشاف أولية.
+            </p>
+            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-600 font-mono mb-3">
+              "أهلاً بك أستاذ {الاسم} في AdVance. سعداء باهتمامك بخدمة {الخدمة}. يسعدنا ترتيب جلسة اكتشاف سريعة لتحديد خطة النمو الأنسب لشركتكم..."
+            </div>
+          </div>
+          <button class="test-automation-btn text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-100 py-2 rounded-lg border border-emerald-200 transition flex items-center justify-center gap-1.5" data-action="اختبار إرسال رسالة ترحيب WhatsApp">
+            <span>محاكاة إطلاق الأتمتة (Test Trigger)</span>
+          </button>
+        </div>
+
+        <!-- Workflow 2 -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-sm">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+                </span>
+                <h3 class="font-bold text-slate-800 text-sm">تنبيه المتابعة بعد 24 ساعة</h3>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" checked class="sr-only peer auto-toggle" data-id="wf2">
+                <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+              </label>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              إذا ظل العميل في مرحلة "عميل جديد" لأكثر من 24 ساعة دون تسجيل نشاط أو مكالمة اكتشاف، يتم إرسال إشعار فوري لمسؤول المبيعات لتجنب ضياع الفرصة.
+            </p>
+            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-600 font-mono mb-3">
+              "⚠️ تنبيه: العميل {الشركة} بانتظار التواصل منذ 24 ساعة. يرجى الاتصال أو إرسال تفاصيل العرض."
+            </div>
+          </div>
+          <button class="test-automation-btn text-xs font-bold bg-blue-50 text-blue-700 hover:bg-blue-100 py-2 rounded-lg border border-blue-200 transition flex items-center justify-center gap-1.5" data-action="محاكاة فحص المتابعات المتأخرة">
+            <span>تشغيل فحص المتابعات الآن</span>
+          </button>
+        </div>
+
+        <!-- Workflow 3 -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-sm">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </span>
+                <h3 class="font-bold text-slate-800 text-sm">أتمتة إرسال العرض ومتابعة المراجعة</h3>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" checked class="sr-only peer auto-toggle" data-id="wf3">
+                <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-purple-600"></div>
+              </label>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              عند تحويل الصفقة إلى مرحلة "إعداد وتقديم العرض"، يتم إنشاء مهمة متابعة تلقائية بعد 3 أيام عمل للتفاوض ومناقشة تفاصيل العرض الفني والمالي.
+            </p>
+            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-600 font-mono mb-3">
+              "تم إنشاء تذكير تلقائي: متابعة استلام العرض وملاحظات العميل {الشركة} بعد 72 ساعة."
+            </div>
+          </div>
+          <button class="test-automation-btn text-xs font-bold bg-purple-50 text-purple-700 hover:bg-purple-100 py-2 rounded-lg border border-purple-200 transition flex items-center justify-center gap-1.5" data-action="محاكاة جدولة متابعة العرض">
+            <span>اختبار جدولة التذكير</span>
+          </button>
+        </div>
+
+        <!-- Workflow 4 -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-sm">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
+                </span>
+                <h3 class="font-bold text-slate-800 text-sm">تجديد الشراكات الشهرية (Retainers)</h3>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" checked class="sr-only peer auto-toggle" data-id="wf4">
+                <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-amber-600"></div>
+              </label>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              إرسال تقرير الإنجاز الشهري ومؤشرات الأداء (KPIs) للعميل في اليوم 25 من كل شهر لتأكيد استمرار الشراكة ومناقشة توسيع نطاق العمل للمرحلة التالية.
+            </p>
+            <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-600 font-mono mb-3">
+              "تقرير الأداء الشهري جاهز لمراجعته مع العميل {الشركة} وتجديد باقة الشراكة للشهر القادم."
+            </div>
+          </div>
+          <button class="test-automation-btn text-xs font-bold bg-amber-50 text-amber-700 hover:bg-amber-100 py-2 rounded-lg border border-amber-200 transition flex items-center justify-center gap-1.5" data-action="محاكاة إشعار تجديد الشراكة الشهرية">
+            <span>اختبار إشعار التجديد الدوري</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: INTEGRATIONS & EMBED (NEW) -->
+    <section id="integrationsView" class="tab-content hidden">
+      <div class="mb-6">
+        <h2 class="text-xl font-bold text-slate-800">مركز التكامل والربط الجاهز</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          أدوات وأكواد جاهزة للنسخ لربط موقع AdVance وواتساب بالـ CRM وتجهيزه للربط مع Hostinger.
+        </p>
+      </div>
+
+      <div class="space-y-6">
+        <!-- Section 1: Ready Website Form Embed -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              </span>
+              <div>
+                <h3 class="font-bold text-slate-800 text-sm">كود نموذج استقبال العملاء (Website Lead Form)</h3>
+                <p class="text-xs text-slate-500">انسخ هذا الكود وضعه مباشرة في أي صفحة بموقعكم على Hostinger ليرسل الطلبات فوراً للـ CRM</p>
+              </div>
+            </div>
+            <button id="copyFormCodeBtn" class="bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>نسخ الكود</span>
+            </button>
+          </div>
+          <pre class="bg-slate-900 text-slate-200 p-4 rounded-lg text-xs font-mono overflow-x-auto max-h-56 leading-relaxed" id="embedFormCodeBlock">&lt;!-- نموذج استقبال طلبات عملاء AdVance --&gt;
+&lt;form id="advanceLeadForm" class="space-y-3" onsubmit="submitAdvanceLead(event)"&gt;
+  &lt;input type="text" id="leadCompany" placeholder="اسم الشركة" required class="w-full p-2 border rounded"&gt;
+  &lt;input type="text" id="leadName" placeholder="مسؤول التواصل" required class="w-full p-2 border rounded"&gt;
+  &lt;input type="tel" id="leadPhone" placeholder="رقم الهاتف / واتساب" required class="w-full p-2 border rounded"&gt;
+  &lt;select id="leadService" class="w-full p-2 border rounded"&gt;
+    &lt;option value="growth_strategy"&gt;01 استراتيجية النمو والتسويق&lt;/option&gt;
+    &lt;option value="content_management"&gt;02 المحتوى وإدارة المنصات&lt;/option&gt;
+    &lt;option value="branding"&gt;03 الهوية البصرية والتصميم&lt;/option&gt;
+    &lt;option value="digital_ads"&gt;05 الإعلانات الرقمية&lt;/option&gt;
+    &lt;option value="web_dev"&gt;08 المواقع والمتاجر الإلكترونية&lt;/option&gt;
+    &lt;option value="automation_crm"&gt;09 الأتمتة وCRM&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded"&gt;طلب استشارة نمو مجانية&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+function submitAdvanceLead(e) {
+  e.preventDefault();
+  const data = {
+    company_name: document.getElementById('leadCompany').value,
+    contact_person: document.getElementById('leadName').value,
+    contact_phone: document.getElementById('leadPhone').value,
+    primary_service: document.getElementById('leadService').value,
+    source: 'website'
+  };
+  fetch('https://ad-vance.org/api.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).then(res => res.json()).then(res => {
+    alert('شكراً لك! تم استلام طلبك وسيتواصل معك فريق AdVance خلال 24 ساعة.');
+    document.getElementById('advanceLeadForm').reset();
+  }).catch(() => {
+    // توجيه تلقائي لواتساب كبديل فوري
+    window.open('https://wa.me/201148484548?text=' + encodeURIComponent('مرحباً، أود الاستفسار عن خدمات AdVance لشركة ' + data.company_name));
+  });
+}
+&lt;/script&gt;</pre>
+        </div>
+
+        <!-- Section 2: Smart WhatsApp Link Generator -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+            </span>
+            <div>
+              <h3 class="font-bold text-slate-800 text-sm">مولّد روابط WhatsApp الذكية للحملات</h3>
+              <p class="text-xs text-slate-500">أنشئ روابط مباشرة لرقمكم (+201148484548) برفق نص مخصص لكل حملة أو خدمة</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+            <div>
+              <label for="waGenService" class="text-xs font-bold text-slate-600 block mb-1">الخدمة المستهدفة:</label>
+              <select id="waGenService" class="text-xs w-full bg-slate-50 border border-slate-300 rounded-lg p-2 focus:outline-none focus:border-blue-500">
+                <option value="استراتيجية النمو والتسويق">استراتيجية النمو والتسويق</option>
+                <option value="إدارة الحملات الرقمية">الإعلانات الرقمية</option>
+                <option value="تصميم وتطوير المواقع والمتاجر">المواقع والمتاجر</option>
+                <option value="أنظمة الأتمتة والـ CRM">الأتمتة وCRM</option>
+                <option value="الهوية البصرية وبروفايل الشركة">الهوية والبروفايل</option>
+              </select>
+            </div>
+            <div>
+              <label for="waGenCampaign" class="text-xs font-bold text-slate-600 block mb-1">المصدر / الحملة:</label>
+              <input type="text" id="waGenCampaign" placeholder="مثال: إعلانات ميتا أكتوبر" value="إعلانات Meta" class="text-xs w-full bg-slate-50 border border-slate-300 rounded-lg p-2 focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="flex items-end">
+              <button id="generateWaLinkBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold py-2 px-3 rounded-lg transition shadow">
+                توليد الرابط المباشر
+              </button>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <input type="text" id="generatedWaUrlInput" readonly class="flex-1 text-xs bg-slate-100 border border-slate-300 rounded-lg p-2 text-slate-600 font-mono" value="https://wa.me/201148484548?text=مرحباً%20فريق%20AdVance">
+            <button id="copyWaUrlBtn" class="bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold px-3 py-2 rounded-lg transition whitespace-nowrap">
+              نسخ الرابط
+            </button>
+          </div>
+        </div>
+
+        <!-- Section 3: Hostinger API Endpoint Configuration -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between mb-3">
+            <div class="flex items-center gap-2">
+              <span class="w-8 h-8 rounded-lg bg-purple-100 text-purple-600 flex items-center justify-center font-bold">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+              </span>
+              <div>
+                <h3 class="font-bold text-slate-800 text-sm">إعداد رابط السيرفر (Hostinger API Endpoint)</h3>
+                <p class="text-xs text-slate-500">عند رفع ملف api.php على هوستنجر، ضع رابطه هنا للتبديل للوضع السحابي الحي</p>
+              </div>
+            </div>
+            <span class="text-xs font-bold bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full border border-slate-200" id="syncStatusBadge">
+              وضع التخزين المحلي (Offline / Local)
+            </span>
+          </div>
+
+          <div class="flex flex-wrap sm:flex-nowrap gap-2 mb-3">
+            <input type="url" id="apiEndpointInput" placeholder="https://ad-vance.org/api.php" value="https://ad-vance.org/api.php" class="flex-1 text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 font-mono focus:outline-none focus:border-blue-500">
+            <button id="testApiBtn" class="bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold px-4 py-2.5 rounded-lg transition whitespace-nowrap">
+              اختبار الاتصال بالسيرفر
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-500 leading-relaxed">
+            * النسخة الحالية تحفظ البيانات في المتصفح فقط. اختبار الخادم المعروض محاكاة؛ لا توجد مزامنة أو رسائل تلقائية متصلة بعد.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: ADMIN ROLES & PERMISSIONS MANAGEMENT (NEW) -->
+    <section id="rolesView" class="tab-content hidden">
+      <!-- Admin Header Banner -->
+      <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white p-6 rounded-2xl shadow-lg border border-slate-700 mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-8 h-8 rounded-lg bg-blue-600/30 border border-blue-400/40 text-blue-300 flex items-center justify-center text-lg">🛡️</span>
+            <h2 class="text-lg font-black tracking-wide text-white">لوحة تحكم المدير العام مؤمن النوساني (Permissions & Roles)</h2>
+            <span class="bg-blue-500/20 text-blue-300 border border-blue-400/30 text-xs px-2.5 py-0.5 rounded-full font-bold">Admin Console</span>
+          </div>
+          <p class="text-xs text-slate-300 max-w-2xl leading-relaxed">
+            التحكم الكامل في صلاحيات أعضاء فريق العمل، إخفاء أو إظهار المعلومات المالية وأرقام الإيرادات، تفعيل وضع القراءة فقط، وضبط صلاحيات الإضافة والتعديل والحذف وتصدير البيانات.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="openAddUserModalBtn" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow flex items-center gap-2 transition transform active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span>إضافة عضو جديد للفريق</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Permissions Info Box -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 text-xs">
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+          <span class="text-2xl">👁️</span>
+          <div>
+            <h4 class="font-bold text-slate-800">حماية البيانات المالية</h4>
+            <p class="text-slate-500 text-[11px] mt-0.5">يمكنك إخفاء مبالغ الصفقات وأرقام الإيرادات المتكررة وأسعار العروض بضغطة زر عن أي عضو.</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+          <span class="text-2xl">🔒</span>
+          <div>
+            <h4 class="font-bold text-slate-800">وضع القراءة فقط (Read-Only)</h4>
+            <p class="text-slate-500 text-[11px] mt-0.5">منع التعديل أو الحذف وحصر العضو في متابعة المهام وتحديث حالتها دون التأثير على بيانات الصفقات.</p>
+          </div>
+        </div>
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-start gap-3">
+          <span class="text-2xl">⚡</span>
+          <div>
+            <h4 class="font-bold text-slate-800">معاينة فورية (Live Simulation)</h4>
+            <p class="text-slate-500 text-[11px] mt-0.5">استخدم مبدل الحسابات أعلى الصفحة لتجربة السيستم فوراً بنفس الصلاحيات الممنوحة ليوسف الخولي.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team Members Roles Matrix -->
+      <div class="space-y-4" id="usersRolesListContainer">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: ADD / EDIT DEAL -->
+  <div id="dealModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200">
+      <div class="p-6 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
+        <h3 id="modalTitle" class="text-lg font-bold text-slate-800">إضافة صفقة / عميل جديد</h3>
+        <button id="closeModalBtn" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form id="dealForm" class="p-6 space-y-4">
+        <input type="hidden" id="dealId" value="">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="companyName" class="block text-xs font-bold text-slate-700 mb-1">اسم الشركة / العميل *</label>
+            <input type="text" id="companyName" required placeholder="مثال: شركة النماء للإنشاءات"
+              class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+          </div>
+
+          <div>
+            <label for="contactPerson" class="block text-xs font-bold text-slate-700 mb-1">اسم مسؤول التواصل *</label>
+            <input type="text" id="contactPerson" required placeholder="مثال: م. أحمد عبد العزيز"
+              class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="contactPhone" class="block text-xs font-bold text-slate-700 mb-1">رقم الهاتف / WhatsApp *</label>
+            <input type="tel" id="contactPhone" required placeholder="مثال: 01148484548"
+              class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+          </div>
+
+          <div>
+            <label for="contactEmail" class="block text-xs font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
+            <input type="email" id="contactEmail" placeholder="client@company.com"
+              class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="contractType" class="block text-xs font-bold text-slate-700 mb-1">نموذج التعاون *</label>
+            <select id="contractType" required class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+              <option value="retainer">شراكة شهرية مستمرة (Retainer)</option>
+              <option value="project">تعاون قائم على المشروع (Project-based)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="primaryService" class="block text-xs font-bold text-slate-700 mb-1">الخدمة الرئيسية (المسار الأول)</label>
+            <select id="primaryService" class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+              <option value="growth_strategy">01 استراتيجية النمو والتسويق</option>
+              <option value="content_management">02 المحتوى وإدارة المنصات</option>
+              <option value="branding">03 الهوية البصرية والتصميم</option>
+              <option value="video_production">04 التصوير وإنتاج الفيديو</option>
+              <option value="digital_ads">05 الإعلانات الرقمية</option>
+              <option value="seo">06 تحسين محركات البحث SEO</option>
+              <option value="influencer">07 التسويق عبر المؤثرين</option>
+              <option value="web_dev">08 المواقع والمتاجر الإلكترونية</option>
+              <option value="automation_crm">09 الأتمتة وCRM</option>
+              <option value="company_profile">10 الملفات المؤسسية وعروض الأعمال</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Multi-Service Selector Grid -->
+        <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-800">الخدمات المطلوبة من العميل (يمكن تحديد أكثر من خدمة معاً):</span>
+            <span id="dealMultiServiceBadge" class="text-[11px] font-bold text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full">1 خدمة مختارة</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5" id="dealServicesPillsContainer">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label for="dealValue" class="block text-xs font-bold text-slate-700 mb-1">قيمة الصفقة *</label>
+            <div class="flex gap-1.5">
+              <input type="number" id="dealValue" required min="0" step="0.01" placeholder="45000"
+                class="flex-1 text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+              <select id="dealCurrency" class="text-xs bg-slate-100 border border-slate-300 rounded-lg px-2 py-2 font-bold focus:outline-none">
+                <option value="ج.م">ج.م</option>
+                <option value="ر.س">ر.س</option>
+                <option value="د.إ">د.إ</option>
+                <option value="$">$</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="dealStage" class="block text-xs font-bold text-slate-700 mb-1">المرحلة الحالية *</label>
+            <select id="dealStage" required class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+              <option value="new_lead">01 عميل جديد (New Lead)</option>
+              <option value="discovery">02 الاكتشاف والتأهيل</option>
+              <option value="proposal">03 إعداد وتقديم العرض</option>
+              <option value="negotiation">04 التفاوض والمراجعة</option>
+              <option value="won">05 تم التعاقد بنجاح (Won)</option>
+              <option value="lost">06 مؤجل / لم يتم الاتفاق</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="dealMarket" class="block text-xs font-bold text-slate-700 mb-1">السوق الجغرافي</label>
+            <select id="dealMarket" class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+              <option value="egypt">مصر (القاهرة / الجيزة)</option>
+              <option value="gulf">الخليج العربي (السعودية / الإمارات)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="leadSource" class="block text-xs font-bold text-slate-700 mb-1">مصدر الفرصة (Lead Source)</label>
+          <select id="leadSource" class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+            <option value="website">الموقع الإلكتروني (ad-vance.org)</option>
+            <option value="whatsapp">محادثة WhatsApp مباشرة</option>
+            <option value="meta_ads">إعلانات Meta (Facebook / Instagram)</option>
+            <option value="google_ads">إعلانات Google و SEO</option>
+            <option value="referral">إحالة / شبكة علاقات وشركاء</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="dealNotes" class="block text-xs font-bold text-slate-700 mb-1">الملاحظات ومتطلبات العميل</label>
+          <textarea id="dealNotes" rows="3" placeholder="اكتب تفاصيل التحدي وأهداف العميل..."
+            class="w-full text-sm bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500"></textarea>
+        </div>
+
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-3">
+          <button type="button" id="cancelModalBtn" class="px-4 py-2 text-sm text-slate-600 hover:text-slate-800 font-semibold rounded-lg">إلغاء</button>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold px-5 py-2 rounded-lg shadow transition">حفظ الصفقة</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: DEAL DETAILS, TASKS & ACTIVITY LOG -->
+  <div id="detailsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div id="detailsDialog" class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200">
+      <div id="detailsIdentityHeader" class="p-6 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
+        <div id="detailsIdentity">
+          <h3 id="detailCompanyName" class="text-lg font-bold text-slate-800">تفاصيل الصفقة</h3>
+          <div id="detailContactPerson" class="detail-contact-rows">
+            <div><span class="contact-label">مسؤول التواصل</span><span id="detailPersonName"></span></div>
+            <div><span class="contact-label">الهاتف</span><a id="detailPhoneLink" dir="ltr"></a></div>
+            <div><span class="contact-label">البريد الإلكتروني</span><a id="detailEmailLink" dir="ltr"></a></div>
+          </div>
+        </div>
+        <button id="closeDetailsModalBtn" aria-label="إغلاق تفاصيل العميل" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-6">
+        <section id="detailFinancialCard" class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div id="detailAmountRow">
+            <span id="detailAmountLabel" class="text-xs text-slate-500">قيمة الصفقة</span>
+            <span id="detailValue" class="text-xl font-black text-blue-600">0 ج.م</span>
+          </div>
+          <div id="detailActionGrid">
+            <a id="detailWhatsAppLink" target="_blank" rel="noopener noreferrer" class="bg-emerald-600 hover:bg-emerald-700 text-white">محادثة WhatsApp</a>
+            <button id="openProposalBtn" type="button" class="bg-blue-600 hover:bg-blue-700 text-white">مسودة عرض سعر</button>
+            <button id="detailEditBtn" type="button" class="bg-blue-50 text-blue-700 border border-blue-200">تعديل البيانات</button>
+            <button id="detailDeleteBtn" type="button" class="bg-rose-50 text-rose-700 border border-rose-200">حذف الصفقة</button>
+          </div>
+        </section>
+
+        <!-- Meta Details Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-slate-400 block mb-0.5">الخدمة المطلوبة</span>
+            <span id="detailService" class="font-bold text-slate-800"></span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-slate-400 block mb-0.5">نوع التعاقد</span>
+            <span id="detailContractType" class="font-bold text-slate-800"></span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-slate-400 block mb-0.5">المرحلة الحالية</span>
+            <span id="detailStage" class="font-bold text-slate-800"></span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-slate-400 block mb-0.5">السوق</span>
+            <span id="detailMarket" class="font-bold text-slate-800"></span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-slate-400 block mb-0.5">المصدر</span>
+            <span id="detailSource" class="font-bold text-slate-800"></span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
+            <span class="text-slate-400 block mb-0.5">تاريخ الإضافة</span>
+            <span id="detailDate" class="font-bold text-slate-800"></span>
+          </div>
+        </div>
+
+        <!-- Stage Change Shortcut -->
+        <div class="flex items-center gap-2">
+          <label for="detailStageSelect" class="text-xs font-bold text-slate-700">تحديث المرحلة مباشرة:</label>
+          <select id="detailStageSelect" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-blue-500">
+            <option value="new_lead">01 عميل جديد</option>
+            <option value="discovery">02 الاكتشاف والتأهيل</option>
+            <option value="proposal">03 إعداد وتقديم العرض</option>
+            <option value="negotiation">04 التفاوض والمراجعة</option>
+            <option value="won">05 تم التعاقد بنجاح (Won)</option>
+            <option value="lost">06 مؤجل / لم يتم الاتفاق</option>
+          </select>
+        </div>
+
+        <!-- Notes / Initial Brief -->
+        <div>
+          <h4 class="text-xs font-bold text-slate-700 mb-1">ملاحظات العميل والتحدي الأساسي:</h4>
+          <div id="detailNotes" class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs text-slate-700 whitespace-pre-wrap leading-relaxed"></div>
+        </div>
+
+        <section id="contentPlansSection" class="content-plans-section" aria-labelledby="contentPlansTitle">
+          <div class="content-section-heading"><div><h4 id="contentPlansTitle">خطة تسليم المحتوى</h4><p>كميات شهرية · توزيع أسبوعي · اعتماد كل مخرج</p></div><button type="button" id="createContentPlanBtn">+ خطة شهرية</button></div>
+          <label class="content-month-select">الشهر <select id="contentPlanMonth" aria-label="شهر خطة المحتوى"></select></label>
+          <div id="contentPlansBody"></div>
+        </section>
+
+        <!-- Tasks & Checklists Section -->
+        <div class="border-t border-slate-100 pt-4">
+          <h4 class="text-xs font-bold text-slate-700 mb-2.5 flex items-center justify-between">
+            <span>المهام والمواعيد المرتبطة بالصفقة (Tasks)</span>
+            <span id="tasksProgressBadge" class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">0/0 مكتمل</span>
+          </h4>
+
+          <div class="flex gap-2 mb-3">
+            <input type="text" id="newTaskInput" placeholder="أضف مهمة (مثل: عقد جلسة زوم لمناقشة العرض)..."
+              class="flex-1 text-xs bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+            <button id="addTaskBtn" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-lg transition whitespace-nowrap">
+              إضافة مهمة
+            </button>
+          </div>
+
+          <div id="dealTasksList" class="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+        <!-- Activity & Communication Log -->
+        <div class="border-t border-slate-100 pt-4">
+          <h4 class="text-xs font-bold text-slate-700 mb-2.5 flex items-center justify-between">
+            <span>سجل المتابعات والأنشطة (Activity Log)</span>
+            <span id="activityCount" class="text-slate-400 font-normal">0 أنشطة</span>
+          </h4>
+
+          <!-- Add Note with Type -->
+          <div class="flex flex-col sm:flex-row gap-2 mb-3">
+            <select id="activityTypeSelect" class="text-xs bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-2 font-bold focus:outline-none">
+              <option value="call">📞 اتصال هاتفي</option>
+              <option value="whatsapp">💬 واتساب</option>
+              <option value="meeting">🤝 اجتماع / مقابلة</option>
+              <option value="proposal">📄 عرض فني / مالي</option>
+              <option value="note">📝 ملاحظة عامة</option>
+            </select>
+            <input type="text" id="newActivityInput" placeholder="تفاصيل المتابعة..."
+              class="flex-1 text-xs bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:border-blue-500">
+            <button id="addActivityBtn" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-2 rounded-lg transition whitespace-nowrap">
+              إضافة متابعة
+            </button>
+          </div>
+
+          <!-- Timeline -->
+          <div id="activitiesTimeline" class="space-y-2.5 max-h-44 overflow-y-auto pr-1">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PROPOSAL & QUOTATION PREVIEW -->
+  <div id="proposalModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto border border-slate-200 flex flex-col">
+      <div class="p-4 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10 no-print">
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-bold text-slate-800">مسودة عرض العمل الرسمي (Proposal)</span>
+          <span class="bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded font-bold">جاهز للطباعة</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="printProposalBtn" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+            <span>طباعة / حفظ PDF</span>
+          </button>
+          <button id="closeProposalModalBtn" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Printable Proposal Sheet Area -->
+      <div id="proposalPrintArea" class="p-8 text-slate-800 space-y-6">
+        <!-- Proposal Header -->
+        <div class="flex items-start justify-between border-b-2 border-slate-800 pb-5">
+          <div class="flex items-center gap-3">
+            <img src="./assets/THIRD LOGO (4).jpg" alt="AdVance Official Logo" class="h-16 w-auto object-contain">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-2xl font-black tracking-wider text-slate-900">AdVance</span>
+                <span class="text-xs bg-slate-900 text-white px-2 py-0.5 rounded font-bold">GROWTH & DIGITAL</span>
+              </div>
+              <p class="text-xs text-slate-600 font-semibold">شريكك للنمو وتطوير الأعمال والتحول الرقمي</p>
+              <p class="text-[11px] text-slate-500 mt-1">تأسست في يناير 2017 &bull; القاهرة - الجيزة &bull; ad-vance.org</p>
+            </div>
+          </div>
+          <div class="text-left text-xs text-slate-600" dir="ltr">
+            <div class="font-bold text-slate-900 text-sm">PROPOSAL / SCOPE OF WORK</div>
+            <div>Ref: <span id="propRef" class="font-mono">ADV-2026-001</span></div>
+            <div>Date: <span id="propDate"></span></div>
+          </div>
+        </div>
+
+        <!-- Client & Project Info -->
+        <div class="grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
+          <div>
+            <span class="text-slate-500 block mb-0.5">مقدم إلى:</span>
+            <div id="propClientCompany" class="text-sm font-extrabold text-slate-900"></div>
+            <div id="propClientPerson" class="text-slate-700"></div>
+            <div id="propClientPhone" class="text-slate-500 mt-0.5" dir="ltr"></div>
+          </div>
+          <div>
+            <span class="text-slate-500 block mb-0.5">نوع التعاقد والمنظومة:</span>
+            <div id="propContractType" class="text-sm font-extrabold text-blue-700"></div>
+            <div id="propServiceTitle" class="text-slate-700 font-semibold mt-0.5"></div>
+            <div class="text-slate-500 mt-0.5">السوق المستهدف: <span id="propMarket"></span></div>
+          </div>
+        </div>
+
+        <!-- Deliverables from AdVance 2026 Profile -->
+        <div>
+          <h4 class="text-xs font-black uppercase tracking-wider text-slate-900 mb-2 border-b border-slate-200 pb-1">
+            نطاق العمل والمخرجات المستلمة (Deliverables)
+          </h4>
+          <ul id="propDeliverablesList" class="space-y-1.5 text-xs text-slate-700">
+            <!-- Populated by JS based on selected AdVance service -->
+          </ul>
+        </div>
+
+        <!-- Financial Summary -->
+        <div class="border-t-2 border-slate-800 pt-4">
+          <div class="flex items-center justify-between text-sm">
+            <span class="font-bold text-slate-800">قيمة الاستثمار المتفق عليها:</span>
+            <span id="propFinancialValue" class="text-xl font-black text-blue-700"></span>
+          </div>
+          <p id="propPaymentTerms" class="text-[11px] text-slate-500 mt-1"></p>
+        </div>
+
+        <!-- Terms & Execution Methodology -->
+        <div class="text-[11px] text-slate-600 bg-slate-50 p-3.5 rounded-lg border border-slate-200 space-y-1 leading-relaxed">
+          <div class="font-bold text-slate-800 text-xs mb-1">منهجية التنفيذ (AdVance Methodology):</div>
+          <div>1. <strong>الاكتشاف والفهم:</strong> تحليل الوضع الحالي، السوق، ونموذج العمل بدقة.</div>
+          <div>2. <strong>التخطيط والتنفيذ:</strong> تحويل الأهداف إلى خطة تنفيذية قابلة للقياس بمؤشرات أداء (KPIs).</div>
+          <div>3. <strong>القياس والتطوير المستمر:</strong> مراجعة دورية للأرقام ومؤشرات النمو لضمان كفاءة الإنفاق والنتائج.</div>
+        </div>
+
+        <!-- Signature Area -->
+        <div class="pt-6 grid grid-cols-2 gap-8 text-center text-xs">
+          <div>
+            <div class="text-slate-500 mb-8">عن شركة AdVance</div>
+            <div class="font-bold text-slate-900">مؤمن النوساني</div>
+            <div class="text-[10px] text-slate-500">المؤسس والرئيس التنفيذي</div>
+          </div>
+          <div>
+            <div class="text-slate-500 mb-8">اعتماد العميل والموافقة</div>
+            <div class="border-b border-dashed border-slate-300 w-36 mx-auto mb-1"></div>
+            <div class="text-[10px] text-slate-500">التوقيع والختم</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- MODAL: ADD / EDIT PROJECT TASK -->
+  <div id="projectTaskModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200">
+      <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <h3 id="taskModalTitle" class="text-sm font-bold text-slate-800">إضافة مهمة تنفيذية للمشروع</h3>
+        <button id="closeTaskModalBtn" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form id="projectTaskForm" class="p-6 space-y-4">
+        <div>
+          <label for="taskDealSelect" class="block text-xs font-bold text-slate-700 mb-1">المشروع / العميل التابع له *</label>
+          <select id="taskDealSelect" required class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+
+        <div>
+          <label for="taskTitleInput" class="block text-xs font-bold text-slate-700 mb-1">عنوان المهمة التنفيذية *</label>
+          <input type="text" id="taskTitleInput" required placeholder="مثال: إعداد النسخ الإعلانية والتصاميم لحملة نوفمبر"
+            class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="taskAssigneeSelect" class="block text-xs font-bold text-slate-700 mb-1">المسؤول عن التنفيذ *</label>
+            <select id="taskAssigneeSelect" required class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+              <option value="مؤمن النوساني">مؤمن النوساني (الرئيس التنفيذي)</option>
+              <option value="يوسف الخولي">يوسف الخولي (فريق العمل والنمو)</option>
+              <option value="العميل">العميل (مراجعة / مدخلات العميل)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="taskDueDateInput" class="block text-xs font-bold text-slate-700 mb-1">موعد التسليم النهائي *</label>
+            <input type="date" id="taskDueDateInput" required class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2 focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="taskToolSelect" class="block text-xs font-bold text-slate-700 mb-1">طريقة / أداة التنفيذ *</label>
+            <select id="taskToolSelect" required class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+              <option value="كلود (Claude)">🤖 كلود (Claude)</option>
+              <option value="شات جي بي تي (ChatGPT)">🤖 شات جي بي تي (ChatGPT)</option>
+              <option value="جيمناي (Gemini)">🤖 جيمناي (Gemini)</option>
+              <option value="انتي جرافتي (Antigravity)">🚀 انتي جرافتي (Antigravity)</option>
+              <option value="ميتا (Meta Ads)">📢 ميتا إعلانات (Meta Ads)</option>
+              <option value="كانفا / أدوبي (Canva / Adobe)">🎨 كانفا / أدوبي</option>
+              <option value="تواصل مع العميل">📞 تواصل مع العميل</option>
+              <option value="أداة مخصصة">✏️ كتابة اختيار مخصص...</option>
+            </select>
+          </div>
+
+          <div id="customToolGroup" class="hidden">
+            <label for="taskCustomToolInput" class="block text-xs font-bold text-slate-700 mb-1">اسم الأداة المخصصة</label>
+            <input type="text" id="taskCustomToolInput" placeholder="اكتب اسم الأداة..." class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="taskPrioritySelect" class="block text-xs font-bold text-slate-700 mb-1">الأولوية</label>
+            <select id="taskPrioritySelect" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+              <option value="عالية">🔴 أولوية عالية (عاجلة)</option>
+              <option value="متوسطة" selected>🟡 أولوية متوسطة</option>
+              <option value="عادية">🟢 أولوية عادية</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="taskStatusSelect" class="block text-xs font-bold text-slate-700 mb-1">حالة البداية</label>
+            <select id="taskStatusSelect" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+              <option value="todo">⏳ قيد الانتظار (To Do)</option>
+              <option value="in_progress">🚀 قيد التنفيذ (In Progress)</option>
+              <option value="review">🔍 مراجعة واعتماد العميل</option>
+              <option value="done">✅ مكتملة ومسلّمة</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="taskDeliverableInput" class="block text-xs font-bold text-slate-700 mb-1">رابط المخرج النهائي (اختياري)</label>
+          <input type="url" id="taskDeliverableInput" placeholder="رابط Google Drive، Figma، أو مسودة المعاينة..."
+            class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+          <button type="button" id="cancelTaskModalBtn" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-800 rounded-lg">إلغاء</button>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-5 py-2 rounded-lg shadow transition">حفظ المهمة</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD NEW USER -->
+  <div id="addUserModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden border border-slate-200">
+      <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+        <div class="flex items-center gap-2">
+          <span class="text-lg">👤</span>
+          <h3 class="text-sm font-bold text-slate-800">إضافة عضو جديد لفريق العمل وضبط صلاحياته</h3>
+        </div>
+        <button id="closeAddUserModalBtn" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form id="addUserForm" class="p-6 space-y-4">
+        <div>
+          <label for="newUserNameInput" class="block text-xs font-bold text-slate-700 mb-1">الاسم الكامل *</label>
+          <input type="text" id="newUserNameInput" required placeholder="مثال: سارة محمد"
+            class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div>
+          <label for="newUserRoleTitleInput" class="block text-xs font-bold text-slate-700 mb-1">المسمى الوظيفي / الدور *</label>
+          <input type="text" id="newUserRoleTitleInput" required placeholder="مثال: مسؤولة الحملات الإعلانية وصناعة المحتوى"
+            class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="newUserUsernameInput" class="block text-xs font-bold text-slate-700 mb-1">اسم المستخدم للدخول (Username) *</label>
+            <input type="text" id="newUserUsernameInput" required placeholder="مثال: sara"
+              class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500 font-mono">
+          </div>
+          <div>
+            <label for="newUserPasswordInput" class="block text-xs font-bold text-slate-700 mb-1">كلمة المرور (Password) *</label>
+            <input type="text" id="newUserPasswordInput" required placeholder="مثال: pass123"
+              class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500 font-mono">
+          </div>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2.5">
+          <span class="text-xs font-bold text-slate-800 block mb-1">الصلاحيات المبدئية للعضو الجديد:</span>
+          
+          <label class="flex items-center justify-between text-xs cursor-pointer p-1.5 hover:bg-white rounded transition">
+            <span class="font-medium text-slate-700">👁️ إظهار المعلومات المالية وأرقام الصفقات</span>
+            <input type="checkbox" id="permNewFinancials" class="rounded text-blue-600 focus:ring-blue-500">
+          </label>
+
+          <label class="flex items-center justify-between text-xs cursor-pointer p-1.5 hover:bg-white rounded transition">
+            <span class="font-medium text-slate-700">🔒 وضع القراءة فقط (Read-Only)</span>
+            <input type="checkbox" id="permNewReadOnly" class="rounded text-blue-600 focus:ring-blue-500">
+          </label>
+
+          <label class="flex items-center justify-between text-xs cursor-pointer p-1.5 hover:bg-white rounded transition">
+            <span class="font-medium text-slate-700">➕ إضافة صفقات وعملاء جدد</span>
+            <input type="checkbox" id="permNewCreateDeals" checked class="rounded text-blue-600 focus:ring-blue-500">
+          </label>
+
+          <label class="flex items-center justify-between text-xs cursor-pointer p-1.5 hover:bg-white rounded transition">
+            <span class="font-medium text-slate-700">✏️ تعديل بيانات الصفقات القائمة</span>
+            <input type="checkbox" id="permNewEditDeals" checked class="rounded text-blue-600 focus:ring-blue-500">
+          </label>
+
+          <label class="flex items-center justify-between text-xs cursor-pointer p-1.5 hover:bg-white rounded transition">
+            <span class="font-medium text-slate-700">🗑️ صلاحية حذف الصفقات</span>
+            <input type="checkbox" id="permNewDeleteDeals" class="rounded text-blue-600 focus:ring-blue-500">
+          </label>
+
+          <label class="flex items-center justify-between text-xs cursor-pointer p-1.5 hover:bg-white rounded transition">
+            <span class="font-medium text-slate-700">📄 توليد وطباعة عروض الأسعار</span>
+            <input type="checkbox" id="permNewProposals" checked class="rounded text-blue-600 focus:ring-blue-500">
+          </label>
+
+          <label class="flex items-center justify-between text-xs cursor-pointer p-1.5 hover:bg-white rounded transition">
+            <span class="font-medium text-slate-700">📥 تصدير البيانات إلى CSV</span>
+            <input type="checkbox" id="permNewExportCsv" class="rounded text-blue-600 focus:ring-blue-500">
+          </label>
+        </div>
+
+        <div class="pt-4 border-t border-slate-100 flex items-center justify-end gap-2">
+          <button type="button" id="cancelAddUserModalBtn" class="px-4 py-2 text-xs font-bold text-slate-600 hover:text-slate-800 rounded-lg">إلغاء</button>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-5 py-2 rounded-lg shadow transition">إضافة العضو</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CHANGE PASSWORD -->
+  <div id="changePasswordModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-sm w-full p-6 border border-slate-200">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <h3 class="text-sm font-bold text-slate-800" id="changePasswordModalTitle">تغيير كلمة المرور</h3>
+        <button id="closeChangePasswordModalBtn" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">✕</button>
+      </div>
+      <form id="changePasswordForm" class="space-y-3">
+        <input type="hidden" id="changePasswordUserId" value="">
+        <div>
+          <label for="newPasswordInput" class="block text-xs font-bold text-slate-700 mb-1">كلمة المرور الجديدة</label>
+          <input type="password" id="newPasswordInput" required minlength="8" autocomplete="new-password" placeholder="8 أحرف على الأقل — اعتماد محلي تجريبي"
+            class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:outline-none focus:border-blue-500 font-mono">
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" id="cancelChangePasswordModalBtn" class="px-3 py-1.5 text-xs font-bold text-slate-600 hover:text-slate-800 rounded-lg">إلغاء</button>
+          <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-4 py-1.5 rounded-lg shadow">حفظ كلمة المرور</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: MOBILE FILTERS & SORT (SLIDE UP BOTTOM SHEET) -->
+  <div id="mobileFilterModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-end md:hidden hidden">
+    <div class="bg-white w-full rounded-t-3xl p-5 border-t border-slate-200 shadow-2xl max-h-[85vh] overflow-y-auto">
+      <div class="w-12 h-1 bg-slate-300 rounded-full mx-auto mb-4"></div>
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+          </span>
+          <h4 class="font-extrabold text-sm text-slate-900">تصفية وترتيب صفقات المسار</h4>
+        </div>
+        <button type="button" id="closeMobileFilterBtn" class="text-slate-400 hover:text-slate-600 p-1 text-sm font-bold">✕</button>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label for="filterContractMobile" class="block text-xs font-bold text-slate-700 mb-1">نوع التعاقد:</label>
+          <select id="filterContractMobile" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-blue-500 font-semibold min-h-[44px]">
+            <option value="all">الكل (الشهري والمشاريع)</option>
+            <option value="retainer">شراكة شهرية مستمرة (Retainer)</option>
+            <option value="project">تعاون قائم على المشروع (Project)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filterServiceMobile" class="block text-xs font-bold text-slate-700 mb-1">منظومة الخدمة:</label>
+          <select id="filterServiceMobile" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-blue-500 font-semibold min-h-[44px]">
+            <option value="all">جميع الخدمات (10 خدمات)</option>
+            <option value="growth_strategy">01 استراتيجية النمو والتسويق</option>
+            <option value="content_management">02 المحتوى وإدارة المنصات</option>
+            <option value="branding">03 الهوية البصرية والتصميم</option>
+            <option value="video_production">04 التصوير وإنتاج الفيديو</option>
+            <option value="digital_ads">05 الإعلانات الرقمية</option>
+            <option value="seo">06 تحسين محركات البحث SEO</option>
+            <option value="influencer">07 التسويق عبر المؤثرين</option>
+            <option value="web_dev">08 المواقع والمتاجر الإلكترونية</option>
+            <option value="automation_crm">09 الأتمتة وCRM</option>
+            <option value="company_profile">10 الملفات المؤسسية وعروض الأعمال</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="filterMarketMobile" class="block text-xs font-bold text-slate-700 mb-1">السوق الجغرافي:</label>
+          <select id="filterMarketMobile" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-blue-500 font-semibold min-h-[44px]">
+            <option value="all">كل الأسواق</option>
+            <option value="egypt">مصر (القاهرة والجيزة)</option>
+            <option value="gulf">الخليج العربي (السعودية والإمارات)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="sortDealsMobile" class="block text-xs font-bold text-slate-700 mb-1">ترتيب الصفقات:</label>
+          <select id="sortDealsMobile" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-blue-500 font-semibold min-h-[44px]">
+            <option value="date_desc">الأحدث إضافة</option>
+            <option value="value_desc">الأعلى قيمة</option>
+            <option value="value_asc">الأقل قيمة</option>
+            <option value="name_asc">أبجدياً (اسم الشركة)</option>
+          </select>
+        </div>
+
+        <div class="pt-3 border-t border-slate-100 flex items-center gap-2.5">
+          <button type="button" id="resetMobileFiltersBtn" class="flex-1 py-3 px-4 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition">
+            إعادة تعيين
+          </button>
+          <button type="button" id="applyMobileFiltersBtn" class="flex-1 py-3 px-4 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl shadow transition">
+            تطبيق الفلاتر
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: MOBILE USER SWITCHER (SLIDE UP BOTTOM SHEET) -->
+  <div id="mobileUserModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-end md:hidden hidden">
+    <div class="bg-white w-full rounded-t-3xl p-5 border-t border-slate-200 shadow-2xl max-h-[85vh] overflow-y-auto">
+      <div class="w-12 h-1 bg-slate-300 rounded-full mx-auto mb-4"></div>
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <div class="flex items-center gap-2">
+          <span class="text-xl" id="mobileModalUserIcon">👑</span>
+          <div>
+            <h4 class="font-bold text-sm text-slate-900" id="mobileModalUserName">مؤمن النوساني</h4>
+            <p class="text-[10px] text-slate-500" id="mobileModalUserRole">المدير العام (Admin)</p>
+          </div>
+        </div>
+        <button type="button" id="closeMobileUserBtn" class="text-slate-400 hover:text-slate-600 p-1 text-sm font-bold">✕</button>
+      </div>
+
+      <div class="space-y-2.5 mb-4">
+        <div class="text-xs font-bold text-slate-700 mb-2">تبديل الحساب لمعاينة الصلاحيات:</div>
+        <button type="button" class="mobile-switch-account-btn w-full flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 text-right transition" data-uid="moamen">
+          <div class="flex items-center gap-2.5">
+            <span class="text-lg">👑</span>
+            <div>
+              <div class="text-xs font-bold text-slate-800">مؤمن النوساني</div>
+              <div class="text-[10px] text-slate-500">المدير العام (Admin) - كامل الصلاحيات</div>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-blue-600 active-indicator-moamen">✓ نشط</span>
+        </button>
+
+        <button type="button" class="mobile-switch-account-btn w-full flex items-center justify-between p-3 rounded-xl border border-slate-200 bg-slate-50 hover:bg-blue-50 text-right transition" data-uid="youssef">
+          <div class="flex items-center gap-2.5">
+            <span class="text-lg">🚀</span>
+            <div>
+              <div class="text-xs font-bold text-slate-800">يوسف الخولي</div>
+              <div class="text-[10px] text-slate-500">عضو فريق - صلاحيات مخصصة</div>
+            </div>
+          </div>
+          <span class="text-xs font-bold text-blue-600 active-indicator-youssef hidden">✓ نشط</span>
+        </button>
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+        <button type="button" id="mobileUserModalLogoutBtn" class="w-full text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 py-3 rounded-xl border border-rose-200 transition text-center flex items-center justify-center gap-2">
+          <span>تسجيل الخروج من النظام</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-auto py-4 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>
+        <strong>AdVance CRM System</strong> &bull; تأسست في يناير 2017 | القاهرة - الجيزة | هاتف: +201148484548
+      </div>
+      <div>
+        الموقع: <a href="https://www.ad-vance.org/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">ad-vance.org</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+
+  <div id="contentPlanModal" class="content-overlay" hidden><section role="dialog" aria-modal="true" aria-labelledby="contentPlanDialogTitle" class="content-dialog"><header><h3 id="contentPlanDialogTitle">خطة تسليم شهرية جديدة</h3><button type="button" data-close-content aria-label="إغلاق">✕</button></header><form id="contentPlanForm">
+    <label>شهر التسليم<input id="planMonthInput" type="month" required></label>
+    <div class="content-form-grid"><fieldset><legend>الريلز</legend><label>المطلوب شهريًا<input id="planReelTarget" type="number" min="0" max="200" step="1" required></label><label>المسؤول<select id="planReelAssignee" required></select></label><div class="content-week-fields"><label>الأسبوع 1<input id="planWeek_reel_0" type="number" min="0" max="200" step="1" required></label><label>الأسبوع 2<input id="planWeek_reel_1" type="number" min="0" max="200" step="1" required></label><label>الأسبوع 3<input id="planWeek_reel_2" type="number" min="0" max="200" step="1" required></label><label>الأسبوع 4<input id="planWeek_reel_3" type="number" min="0" max="200" step="1" required></label></div></fieldset><fieldset><legend>الصور</legend><label>المطلوب شهريًا<input id="planImageTarget" type="number" min="0" max="200" step="1" required></label><label>المسؤول<select id="planImageAssignee" required></select></label><div class="content-week-fields"><label>الأسبوع 1<input id="planWeek_image_0" type="number" min="0" max="200" step="1" required></label><label>الأسبوع 2<input id="planWeek_image_1" type="number" min="0" max="200" step="1" required></label><label>الأسبوع 3<input id="planWeek_image_2" type="number" min="0" max="200" step="1" required></label><label>الأسبوع 4<input id="planWeek_image_3" type="number" min="0" max="200" step="1" required></label></div></fieldset></div>
+    <p class="content-explanation">التوزيع تلقائي وقابل للتعديل؛ مجموع الأسابيع يجب أن يساوي المطلوب الشهري. الأسبوع الرابع يشمل يوم 22 حتى نهاية الشهر. تُنشأ كل المخرجات قيد الانتظار، ولا تُستبدل أي مهام حالية.</p><p id="contentPlanError" role="alert" class="content-error"></p><footer><button type="button" data-close-content>إلغاء</button><button type="submit" class="content-primary">إنشاء الخطة والمخرجات</button></footer>
+  </form></section></div>
+  <div id="contentItemModal" class="content-overlay" hidden><section role="dialog" aria-modal="true" aria-labelledby="contentItemDialogTitle" class="content-dialog"><header><h3 id="contentItemDialogTitle">تفاصيل مخرج المحتوى</h3><button type="button" data-close-content aria-label="إغلاق">✕</button></header><form id="contentItemForm"><input id="contentItemId" type="hidden"><label>العنوان<input id="contentItemTitle" required maxlength="200"></label><div class="content-form-grid"><label>المسؤول<select id="contentItemAssignee"></select></label><label>موعد التسليم<input id="contentItemDue" type="date" required></label></div><label>رابط الملف<input id="contentItemUrl" type="url" placeholder="https://…" dir="ltr"></label><label>الحالة<select id="contentItemStatus"></select></label><p id="contentItemHint" class="content-explanation"></p><p id="contentItemError" class="content-error" role="alert"></p><footer><button type="button" data-close-content>إغلاق</button><button type="submit" id="saveContentItemBtn" class="content-primary">حفظ التحديث</button></footer></form></section></div>
+
+  <script src="./src/crm-core.js" defer></script>
+<script src="./src/content-plans.js" defer></script>
+<script src="./src/app.js" defer></script>
+  <!-- MOBILE FLOATING ACTION BUTTON (FAB) -->
+  
+
+  <!-- MOBILE BOTTOM NAVIGATION BAR -->
+  <!-- mobileBottomNav removed in favor of top dropdown menu -->
+
+  <!-- MOBILE MORE MENU BOTTOM SHEET -->
+  <div id="mobileMoreModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-end md:hidden hidden">
+    <div class="bg-white w-full rounded-t-3xl p-5 border-t border-slate-200 shadow-2xl max-h-[85vh] overflow-y-auto">
+      <div class="w-12 h-1 bg-slate-300 rounded-full mx-auto mb-4"></div>
+      
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+        <div class="flex items-center gap-2.5">
+          <img src="./assets/ICON LOGO (3).jpg" alt="AdVance" class="w-8 h-8 rounded-lg object-cover">
+          <div>
+            <h4 class="font-bold text-sm text-slate-900">قائمة النظام الإضافية</h4>
+            <p class="text-[10px] text-slate-500">AdVance Growth CRM Mobile</p>
+          </div>
+        </div>
+        <button type="button" id="closeMobileMoreBtn" class="text-slate-400 hover:text-slate-600 p-1 text-sm font-bold">✕</button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5 mb-4">
+        <button type="button" data-sheet-tab="roles" class="mobile-sheet-tab-btn flex items-center gap-2 p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 text-right transition">
+          <span class="text-xl">👑</span>
+          <div>
+            <div class="text-xs font-bold text-slate-800">الصلاحيات</div>
+            <div class="text-[9px] text-slate-500">إدارة المستخدمين</div>
+          </div>
+        </button>
+
+        <button type="button" data-sheet-tab="contacts" class="mobile-sheet-tab-btn flex items-center gap-2 p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 text-right transition">
+          <span class="text-xl">📇</span>
+          <div>
+            <div class="text-xs font-bold text-slate-800">جهات الاتصال</div>
+            <div class="text-[9px] text-slate-500">قاعدة العملاء</div>
+          </div>
+        </button>
+
+        <button type="button" id="mobileOpenProposalBtn" class="flex items-center gap-2 p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 text-right transition">
+          <span class="text-xl">📄</span>
+          <div>
+            <div class="text-xs font-bold text-slate-800">عرض سعر</div>
+            <div class="text-[9px] text-slate-500">طباعة Proposal</div>
+          </div>
+        </button>
+
+        <button type="button" data-sheet-tab="automations" class="mobile-sheet-tab-btn flex items-center gap-2 p-3 rounded-xl bg-slate-50 hover:bg-blue-50 border border-slate-200 text-right transition">
+          <span class="text-xl">⚡</span>
+          <div>
+            <div class="text-xs font-bold text-slate-800">الأتمتة</div>
+            <div class="text-[9px] text-slate-500">Webhook & API</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+        <div class="text-xs font-bold text-slate-600 flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span>وضع محلي — بلا مزامنة</span>
+        </div>
+        <button type="button" id="mobileSheetLogoutBtn" class="text-xs font-bold text-rose-600 bg-rose-50 px-3 py-1.5 rounded-lg border border-rose-200">
+          تسجيل الخروج 🚪
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

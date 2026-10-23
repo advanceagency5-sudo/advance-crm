@@ -1,0 +1,34 @@
+const fs=require('node:fs'),path=require('node:path');
+let html=fs.readFileSync(path.join(__dirname,'index.html'),'utf8');
+const core=fs.readFileSync(path.join(__dirname,'src/crm-core.js'),'utf8');
+const contentPlans=fs.readFileSync(path.join(__dirname,'src/content-plans.js'),'utf8');
+let app=fs.readFileSync(path.join(__dirname,'src/app.js'),'utf8');
+app=app.replaceAll('advance_crm_repair_','advance_crm_mobile_demo_');
+app=app.replaceAll('window.localStorage','mobileLocalStore').replaceAll('window.sessionStorage','mobileSession');
+app=app.replace(/\bsessionStorage\./g,'mobileSession.');
+app=app.replace("function newRecordId() { return 'rec_' + window.crypto.randomUUID(); }",`function newRecordId() { return 'rec_' + (window.crypto?.randomUUID ? window.crypto.randomUUID() : Date.now().toString(36) + '_' + (++mobileIdCounter)); }`);
+app=app.replace('if (banner) banner.textContent = message;',"if (banner) banner.textContent = message + (mobileTransient ? ' — الحفظ مؤقت لهذه الجلسة فقط؛ نزّل نسخة قبل الإغلاق.' : '');");
+app=app.replace('      setupRecoveryActions();',`      setupRecoveryActions();
+      setStorageHealth('نسخة تجربة الموبايل.');
+      const demoButton = document.createElement('button');
+      demoButton.type = 'button'; demoButton.textContent = 'دخول التجربة مباشرة';
+      demoButton.className = 'w-full mt-4 bg-emerald-600 text-white font-bold py-3 rounded-xl';
+      demoButton.addEventListener('click', () => {
+        document.getElementById('loginUsername').value = DEFAULT_TEAM_USERS[0].username;
+        document.getElementById('loginPassword').value = DEFAULT_TEAM_USERS[0].password;
+        document.getElementById('loginForm').requestSubmit();
+      });
+      document.getElementById('loginForm').appendChild(demoButton);`);
+const bootstrap=`let mobileTransient=false,mobileIdCounter=0;
+function mobileStorage(name){try{const store=window[name],key='mobile_probe_'+Date.now();store.setItem(key,'1');store.removeItem(key);return store}catch{mobileTransient=true;const memory=new Map();return{getItem:key=>memory.get(key)??null,setItem:(key,value)=>memory.set(key,String(value)),removeItem:key=>memory.delete(key)}}}
+const mobileLocalStore=mobileStorage('localStorage'),mobileSession=mobileStorage('sessionStorage');
+`;
+const safeScript=source=>source.replace(/<\/script/gi,'<\\/script');
+html=html.replace('<script src="./src/crm-core.js" defer></script>',()=>'<script>'+safeScript(core)+'</script>');
+html=html.replace('<script src="./src/content-plans.js" defer></script>',()=>'<script>'+safeScript(contentPlans)+'</script>');
+html=html.replace('<script src="./src/app.js" defer></script>',()=>'<script>'+safeScript(bootstrap+app)+'</script>');
+html=html.replace(/\.\/assets\/([^"<>]+)/g,(_,name)=>'data:image/jpeg;base64,'+fs.readFileSync(path.join(__dirname,'assets',name)).toString('base64'));
+html=html.replace('تسجيل الدخول إلى AdVance CRM','تجربة AdVance CRM على الموبايل');
+html=html.replace('التخزين منفصل عن النسخة القديمة. تسجيل الدخول الحالي تجريبي؛ قاعدة البيانات والصلاحيات الآمنة في المرحلة التالية.','نسخة تجريبية للموبايل ببيانات منفصلة. استخدم زر دخول التجربة. تحتاج اتصال إنترنت لتحميل تنسيق الواجهة؛ لا تستخدم بيانات عملاء حقيقية.');
+fs.writeFileSync(path.join(__dirname,'../AdVance-CRM-Mobile-Demo.html'),html);
+console.log('Mobile demo created.');

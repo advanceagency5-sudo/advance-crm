@@ -1,0 +1,7 @@
+{
+  "name": "advance-crm-local-repair",
+  "version": "0.2.0-rc.1",
+  "private": true,
+  "scripts": { "start": "node server.cjs", "test": "node --test tests/core.test.cjs tests/content-plans.test.cjs", "check": "node --check src/app.js && node --check src/content-plans.js" },
+  "engines": { "node": ">=20" }
+}
